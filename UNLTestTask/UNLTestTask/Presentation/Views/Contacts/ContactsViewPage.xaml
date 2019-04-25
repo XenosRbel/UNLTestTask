@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UNLTestTask.Presentation.Views.Contacts.ContactsViewPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView
+                ItemsSource="{Binding Path=ContactItems}"
+                RefreshCommand="{Binding LoadCommand}"
+                IsPullToRefreshEnabled="True"
+                HasUnevenRows ="True"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                SeparatorColor="Transparent"
+                ItemTapped="OnListViewOnItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid Padding="5,5,5,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Grid.Row = "0" Source="{Binding Path=PhotoPath}"/>
+
+                                    <StackLayout Grid.Column="1" Grid.Row = "0" 
+                                                 Margin="5">
+                                        <Label LineBreakMode="TailTruncation"
+                                               Text="{Binding Path=Name}"
+                                               TextColor="Black"/>
+                                        <Label LineBreakMode="TailTruncation"
+                                               Text="{Binding Path=PhoneNumber}"        
+                                               TextColor="Black"/>
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
