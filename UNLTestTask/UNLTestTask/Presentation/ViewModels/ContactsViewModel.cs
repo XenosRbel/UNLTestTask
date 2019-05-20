@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using UNLTestTask.Helpers;
 using UNLTestTask.Presentation.Models;
 using Xamarin.Forms;
@@ -11,7 +12,7 @@ namespace UNLTestTask.Presentation.ViewModels
     internal class ContactsViewModel : BaseViewModel
     {
         public ObservableRangeCollection<Contact> ContactItems { get; set; }
-        public Command LoadCommand { get; set; }
+        public ICommand LoadCommand { get; set; }
 
         public ContactsViewModel()
         {
@@ -36,14 +37,16 @@ namespace UNLTestTask.Presentation.ViewModels
                     {
                         PhotoPath = "tom.png",
                         Name = "Tom",
-                        PhoneNumber = "+375441234569"
+                        PhoneNumber = "+375441234569",
+						PhoneType = ContactType.WorkPhone
                     },
 
                     new Contact
                     {
                         PhotoPath = "jerry.png",
                         Name = "Jerry",
-                        PhoneNumber = "+375252236548"
+                        PhoneNumber = "+375252236548",
+						PhoneType = ContactType.None
                     }
                 };
 

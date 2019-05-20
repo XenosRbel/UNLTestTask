@@ -1,7 +1,66 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:UNLTestTask.Helpers;assembly=UNLTestTask"
              x:Class="UNLTestTask.Presentation.Views.Contacts.ContactsViewPage">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="DefaultPhone">
+            <ViewCell>
+                <ViewCell.View>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Grid.Row = "0" Source="tom.png"/>
+
+                        <StackLayout Grid.Column="1" Grid.Row = "0" 
+                                     Margin="5">
+                            <Label LineBreakMode="TailTruncation"
+                                   Text="{Binding Path=Name}"
+                                   TextColor="Black"/>
+                            <Label LineBreakMode="TailTruncation"
+                                   Text="{Binding Path=PhoneNumber}"        
+                                   TextColor="Black"/>
+                        </StackLayout>
+                    </Grid>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="WorkPhone">
+            <ViewCell>
+                <ViewCell.View>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Grid.Row = "0" Source="jerry.png"/>
+
+                        <StackLayout Grid.Column="1" Grid.Row = "0" 
+                                     Margin="5">
+                            <Label LineBreakMode="TailTruncation"
+                                   Text="{Binding Path=Name}"/>
+                            <Label LineBreakMode="TailTruncation"
+                                   Text="{Binding Path=PhoneNumber}"        
+                                   TextColor="DarkCyan"/>
+                        </StackLayout>
+                    </Grid>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+        <helpers:ContactDataSelector x:Key="ContactDataSelector" 
+                                     DefaultTemplate="{StaticResource DefaultPhone}"
+                                     WorkTemplate="{StaticResource WorkPhone}"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <ListView
@@ -12,36 +71,8 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 SeparatorColor="Transparent"
-                ItemTapped="OnListViewOnItemTapped">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <Grid Padding="5,5,5,5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="20"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Grid.Row = "0" Source="{Binding Path=PhotoPath}"/>
-
-                                    <StackLayout Grid.Column="1" Grid.Row = "0" 
-                                                 Margin="5">
-                                        <Label LineBreakMode="TailTruncation"
-                                               Text="{Binding Path=Name}"
-                                               TextColor="Black"/>
-                                        <Label LineBreakMode="TailTruncation"
-                                               Text="{Binding Path=PhoneNumber}"        
-                                               TextColor="Black"/>
-                                    </StackLayout>
-                                </Grid>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                ItemTapped="OnListViewOnItemTapped"
+                ItemTemplate="{DynamicResource ContactDataSelector}">
             </ListView>
         </StackLayout>
     </ContentPage.Content>

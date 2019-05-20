@@ -9,5 +9,12 @@ namespace UNLTestTask.Presentation.Models
         public string PhotoPath { get; set; }
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
+		public ContactType PhoneType { get; set; }
+    }
+
+    public enum ContactType
+    {
+		None,
+		WorkPhone
     }
 }
