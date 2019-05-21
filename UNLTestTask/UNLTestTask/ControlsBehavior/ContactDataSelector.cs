@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UNLTestTask.Presentation.Models;
-using Xamarin.Essentials;
+﻿using UNLTestTask.Models;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Helpers
+namespace UNLTestTask.ControlsBehavior
 {
 	public class ContactDataSelector : DataTemplateSelector
 	{
@@ -14,7 +10,7 @@ namespace UNLTestTask.Helpers
 
 		protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
 		{
-			var obj = (Contact) item;
+			var obj = (Contact)item;
 
 			return obj.PhoneType == ContactType.None ? DefaultTemplate : WorkTemplate;
 		}

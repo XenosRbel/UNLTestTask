@@ -34,10 +34,19 @@
                                TextColor="Black"/>
                     </StackLayout>
 
-                    <Button Grid.Column="0" Grid.Row = "2"
-                            Text="Call"
-                            Margin="20, 5, 20, 0"
-                            Clicked="OnButtonOnClicked"/>
+                    <StackLayout Grid.Column="0" Grid.Row = "2">
+                        <Button Text="Call"
+                                Margin="20, 5, 20, 0"
+                                Command="{Binding CallCommand}"/>
+
+                        <Button Text="Edit"
+                                Margin="20, 5, 20, 0"
+                                Command="{Binding EditContactCommand}"/>
+
+                        <Button Text="Remove"
+                                Margin="20, 5, 20, 0"
+                                Command="{Binding RemoveContactCommand}"/>
+                    </StackLayout>
                 </Grid>
             </StackLayout>
         </RelativeLayout>

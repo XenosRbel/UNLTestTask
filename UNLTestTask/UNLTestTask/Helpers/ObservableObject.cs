@@ -2,7 +2,7 @@
 
 namespace UNLTestTask.Helpers
 {
-    internal class ObservableObject<T> : INotifyPropertyChanged
+	public class ObservableObject<T> : INotifyPropertyChanged
     {
         private T _property;
 

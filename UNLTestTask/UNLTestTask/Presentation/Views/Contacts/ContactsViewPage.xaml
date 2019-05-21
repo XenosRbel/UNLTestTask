@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:helpers="clr-namespace:UNLTestTask.Helpers;assembly=UNLTestTask"
+             xmlns:controlsBehavior="clr-namespace:UNLTestTask.ControlsBehavior;assembly=UNLTestTask"
              x:Class="UNLTestTask.Presentation.Views.Contacts.ContactsViewPage">
     <ContentPage.Resources>
         <DataTemplate x:Key="DefaultPhone">
@@ -57,23 +57,35 @@
                 </ViewCell.View>
             </ViewCell>
         </DataTemplate>
-        <helpers:ContactDataSelector x:Key="ContactDataSelector" 
+        <controlsBehavior:ContactDataSelector x:Key="ContactDataSelector" 
                                      DefaultTemplate="{StaticResource DefaultPhone}"
                                      WorkTemplate="{StaticResource WorkPhone}"/>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <ListView
                 ItemsSource="{Binding Path=ContactItems}"
                 RefreshCommand="{Binding LoadCommand}"
+                IsRefreshing="{Binding IsBusy}"
                 IsPullToRefreshEnabled="True"
                 HasUnevenRows ="True"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 SeparatorColor="Transparent"
-                ItemTapped="OnListViewOnItemTapped"
-                ItemTemplate="{DynamicResource ContactDataSelector}">
+                controlsBehavior:ListViewTappedBehavior.Command="{Binding TappedCommand}"
+                ItemTemplate="{DynamicResource ContactDataSelector}"
+                AbsoluteLayout.LayoutFlags="PositionProportional">
             </ListView>
-        </StackLayout>
+            <StackLayout Orientation="Horizontal"
+                         AbsoluteLayout.LayoutBounds="0.5,1,-1,-1"
+                         AbsoluteLayout.LayoutFlags="PositionProportional">
+                <Button Text="+" 
+                        WidthRequest="50" 
+                        HeightRequest="50" 
+                        FontSize="24" 
+                        BackgroundColor="Transparent" Visual="Material"
+                        Command="{Binding AddContactCommand}"/>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

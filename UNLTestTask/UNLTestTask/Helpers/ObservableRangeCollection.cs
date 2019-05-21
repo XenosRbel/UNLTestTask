@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace UNLTestTask.Helpers
 {
-    internal class ObservableRangeCollection<T> : ObservableCollection<T>
+	public class ObservableRangeCollection<T> : ObservableCollection<T>
     {
         public ObservableRangeCollection() : base()
         {

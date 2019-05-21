@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using UNLTestTask.DataCore;
 
 namespace UNLTestTask.Presentation.ViewModels
 {
-    internal class BaseViewModel : INotifyPropertyChanged
+	public class BaseViewModel : INotifyPropertyChanged
     {
-        private bool _isBusy = false;
+		private bool _isBusy;
+
         public bool IsBusy
         {
             get => _isBusy;
@@ -15,6 +17,7 @@ namespace UNLTestTask.Presentation.ViewModels
         }
 
         private string _title = string.Empty;
+
         public string Title
         {
             get => _title;
@@ -35,7 +38,7 @@ namespace UNLTestTask.Presentation.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        public void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
 

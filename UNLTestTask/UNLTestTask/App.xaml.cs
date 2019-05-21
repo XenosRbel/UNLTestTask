@@ -1,18 +1,24 @@
-﻿using UNLTestTask.Presentation.Views.Contacts;
+﻿using LiteDB;
+using UNLTestTask.DataCore;
+using UNLTestTask.Presentation.Views.Contacts;
+using UNLTestTask.Services;
 using Xamarin.Forms;
 
 namespace UNLTestTask
 {
     public partial class App : Application
     {
-        public App()
+	    private readonly IContainer _container;
+	    private readonly INavigationService _navigationService;
+
+		public App()
         {
             InitializeComponent();
 
-            var navigation = new NavigationPage(new MainPage());
-            MainPage = navigation.RootPage;
+			_container = new Container(this);
+			_navigationService = _container.GetNavigationService();
 
-            MainPage.Navigation.PushModalAsync(new ContactsViewPage(), false);
+			_navigationService.PushContactsPageAsync();
         }
 
         protected override void OnStart()

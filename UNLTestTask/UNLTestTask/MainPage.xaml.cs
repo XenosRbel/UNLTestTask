@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UNLTestTask.DataCore;
+using UNLTestTask.Presentation.ViewModels;
 using Xamarin.Forms;
 
 namespace UNLTestTask
@@ -13,9 +11,9 @@ namespace UNLTestTask
     [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+	    public MainPage()
         {
-            InitializeComponent();
+	        InitializeComponent();
         }
     }
 }
