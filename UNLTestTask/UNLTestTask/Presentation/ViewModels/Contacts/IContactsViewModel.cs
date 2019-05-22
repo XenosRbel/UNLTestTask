@@ -6,9 +6,11 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 {
 	public interface IContactsViewModel
 	{
+		ObservableRangeCollection<ContactViewModel> ContactViewModelsItems { get; set; }
 		ICommand AddContactCommand { get; }
-		ObservableRangeCollection<Contact> ContactItems { get; set; }
 		ICommand LoadCommand { get; }
 		ICommand TappedCommand { get; }
+		ICommand EditContactCommand { get; set; }
+		ICommand RemoveContactCommand { get; set; }
 	}
 }

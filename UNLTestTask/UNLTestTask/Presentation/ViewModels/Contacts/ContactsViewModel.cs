@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using LiteDB;
@@ -23,21 +24,55 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService)); ;
 
 			LoadCommand = new Command(async () => await OnExecuteLoadCommand());
-			TappedCommand = new Command(OnItemTapped);
-			AddContactCommand = new Command(OnAddContact);
 
-			ContactItems = new ObservableRangeCollection<Contact>();
+			TappedCommand = new Command(OnItemTapped);
+
+			AddContactCommand = new Command(OnAddContact);
+			EditContactCommand = new Command(OnEditContact);
+			RemoveContactCommand = new Command(OnRemoved);
+
+			ContactViewModelsItems = new ObservableRangeCollection<ContactViewModel>();
+
+			FillStaticContactData();
 		}
 
-		public ObservableRangeCollection<Contact> ContactItems { get; set; }
+		private async void FillStaticContactData()
+		{
+			var contacts = new List<Contact>
+			{
+				new Contact
+				{
+					PhotoPath = "tom.png",
+					Name = "Tom",
+					PhoneNumber = "+375441234569",
+					PhoneType = ContactType.None,
+					Id = 0
+				},
+
+				new Contact
+				{
+					PhotoPath = "jerry.png",
+					Name = "Jerry",
+					PhoneNumber = "+375252236548",
+					PhoneType = ContactType.None,
+					Id = 1
+				}
+			};
+
+			await _repository.AddAllAsync(contacts);
+		}
+
+		public ObservableRangeCollection<ContactViewModel> ContactViewModelsItems { get; set; }
 		public ICommand LoadCommand { get; private set; }
 		public ICommand TappedCommand { get; private set; }
 		public ICommand AddContactCommand { get; private set; }
+		public ICommand EditContactCommand { get; set; }
+		public ICommand RemoveContactCommand { get; set; }
 
 		private void OnItemTapped(object obj)
 		{
-			var contact = (Contact)obj;
-			Device.BeginInvokeOnMainThread(async () => await _navigationService.PushContactDetailsPageAsync(contact));
+			var contact = (ContactViewModel)obj;
+			Device.BeginInvokeOnMainThread(async () => await _navigationService.PushContactDetailsPageAsync(contact.Contact));
 		}
 
 		private void OnAddContact()
@@ -45,19 +80,48 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			Device.BeginInvokeOnMainThread(async () => await _navigationService.PushEditContactAsync());
 		}
 
+		private async void OnRemoved(object obj)
+		{
+			var contactViewModel = (ContactViewModel) obj;
+			var objContact = contactViewModel.Contact;
+
+			var contacts = await _repository.GetAllAsync<Contact>();
+			var contact = contacts.First(item => item.Id == objContact.Id);
+			contacts.Remove(contact);
+
+			await _repository.RemoveAllAsync<Contact>();
+			await _repository.AddAllAsync(contacts);
+
+			OnExecuteLoadCommand();
+		}
+
+		private void OnEditContact(object obj)
+		{
+			var contactViewModel = (ContactViewModel)obj;
+			var objContact = contactViewModel.Contact;
+			_navigationService.PushEditContactAsync(objContact);
+		}
+
 		private async Task OnExecuteLoadCommand()
 		{
-			//if (IsBusy) return;
-
 			IsBusy = true;
 
 			try
 			{
-				ContactItems.Clear();
+				ContactViewModelsItems.Clear();
 
-				var contacts = await _repository.GetAllAsync<Contact>();
+				var repositoryContacts = await _repository.GetAllAsync<Contact>();
+				var contactVModels = new List<ContactViewModel>();
 
-				ContactItems.AddRange(contacts);
+				foreach (var contact in repositoryContacts)
+				{
+					contactVModels.Add(new ContactViewModel(this)
+					{
+						Contact = contact
+					});
+				}
+
+				ContactViewModelsItems.AddRange(contactVModels);
 			}
 			catch (Exception ex)
 			{

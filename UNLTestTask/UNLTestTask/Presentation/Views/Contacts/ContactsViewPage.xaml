@@ -4,27 +4,50 @@
              xmlns:controlsBehavior="clr-namespace:UNLTestTask.ControlsBehavior;assembly=UNLTestTask"
              x:Class="UNLTestTask.Presentation.Views.Contacts.ContactsViewPage">
     <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DefaultGridContactCell" TargetType="Grid">
+                <Setter Property="RowDefinitions">
+                    <Setter.Value>
+                        <RowDefinitionCollection>
+                            <RowDefinition Height="100"/>
+                        </RowDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ColumnDefinitions">
+                    <Setter.Value>
+                        <ColumnDefinitionCollection>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </ColumnDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Margin" Value="5,5,5,5"/>
+            </Style>
+
+            <Style x:Key="DefaultContactCell" TargetType="StackLayout">
+                <Setter Property="Grid.Column" Value="1"/>
+                <Setter Property="Grid.Row" Value="0"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
         <DataTemplate x:Key="DefaultPhone">
             <ViewCell>
+                <ViewCell.ContextActions>
+                    <MenuItem Text="Remove" Command="{Binding RemoveContactCommand}" CommandParameter="{Binding .}"/>
+                    <MenuItem Text="Edit" Command="{Binding EditContactCommand}" CommandParameter="{Binding .}"/>
+                </ViewCell.ContextActions>
                 <ViewCell.View>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource DefaultGridContactCell}">
                         <Image Grid.Column="0" Grid.Row = "0" Source="tom.png"/>
 
-                        <StackLayout Grid.Column="1" Grid.Row = "0" 
-                                     Margin="5">
+                        <StackLayout Style="{StaticResource DefaultContactCell}">
                             <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Path=Name}"
+                                   Text="{Binding Contact.Name}"
                                    TextColor="Black"/>
                             <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Path=PhoneNumber}"        
+                                   Text="{Binding Contact.PhoneNumber}"        
                                    TextColor="Black"/>
                         </StackLayout>
                     </Grid>
@@ -33,24 +56,19 @@
         </DataTemplate>
         <DataTemplate x:Key="WorkPhone">
             <ViewCell>
+                <ViewCell.ContextActions>
+                    <MenuItem Text="Remove" Command="{Binding RemoveContactCommand}" CommandParameter="{Binding .}"/>
+                    <MenuItem Text="Edit" Command="{Binding EditContactCommand}" CommandParameter="{Binding .}"/>
+                </ViewCell.ContextActions>
                 <ViewCell.View>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                    <Grid Style="{StaticResource DefaultGridContactCell}">
                         <Image Grid.Column="0" Grid.Row = "0" Source="jerry.png"/>
 
-                        <StackLayout Grid.Column="1" Grid.Row = "0" 
-                                     Margin="5">
+                        <StackLayout Style="{StaticResource DefaultContactCell}">
                             <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Path=Name}"/>
+                                   Text="{Binding Contact.Name}"/>
                             <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Path=PhoneNumber}"        
+                                   Text="{Binding Contact.PhoneNumber}"        
                                    TextColor="DarkCyan"/>
                         </StackLayout>
                     </Grid>
@@ -64,7 +82,7 @@
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <ListView
-                ItemsSource="{Binding Path=ContactItems}"
+                ItemsSource="{Binding ContactViewModelsItems}"
                 RefreshCommand="{Binding LoadCommand}"
                 IsRefreshing="{Binding IsBusy}"
                 IsPullToRefreshEnabled="True"
@@ -74,11 +92,12 @@
                 SeparatorColor="Transparent"
                 controlsBehavior:ListViewTappedBehavior.Command="{Binding TappedCommand}"
                 ItemTemplate="{DynamicResource ContactDataSelector}"
-                AbsoluteLayout.LayoutFlags="PositionProportional" Margin="5,5,5,0">
+                AbsoluteLayout.LayoutFlags="PositionProportional">
             </ListView>
             <StackLayout Orientation="Horizontal"
                          AbsoluteLayout.LayoutBounds="0.5,1,-1,-1"
-                         AbsoluteLayout.LayoutFlags="PositionProportional">
+                         AbsoluteLayout.LayoutFlags="PositionProportional" 
+                         Margin="0,0,0,5">
                 <Button Text="Add contact" 
                         HeightRequest="50" 
                         FontSize="24" 

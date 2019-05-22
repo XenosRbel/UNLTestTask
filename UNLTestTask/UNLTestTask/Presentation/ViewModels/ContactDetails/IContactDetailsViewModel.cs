@@ -8,7 +8,5 @@ namespace UNLTestTask.Presentation.ViewModels.ContactDetails
 	{
 		ICommand CallCommand { get; set; }
 		ObservableObject<Contact> Contact { get; set; }
-		ICommand EditContactCommand { get; set; }
-		ICommand RemoveContactCommand { get; set; }
 	}
 }

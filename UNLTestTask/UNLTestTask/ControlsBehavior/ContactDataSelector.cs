@@ -1,4 +1,5 @@
 ﻿using UNLTestTask.Models;
+using UNLTestTask.Presentation.ViewModels.Contacts;
 using Xamarin.Forms;
 
 namespace UNLTestTask.ControlsBehavior
@@ -10,9 +11,9 @@ namespace UNLTestTask.ControlsBehavior
 
 		protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
 		{
-			var obj = (Contact)item;
+			var obj = (ContactViewModel)item;
 
-			return obj.PhoneType == ContactType.None ? DefaultTemplate : WorkTemplate;
+			return obj.Contact.PhoneType == ContactType.None ? DefaultTemplate : WorkTemplate;
 		}
 	}
 }

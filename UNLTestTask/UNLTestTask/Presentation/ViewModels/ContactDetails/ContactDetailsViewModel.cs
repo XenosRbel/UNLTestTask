@@ -28,34 +28,11 @@ namespace UNLTestTask.Presentation.ViewModels.ContactDetails
 			Contact.Property.PhotoPath = Contact.Property.PhoneType == ContactType.None ? "tom.png" : "jerry.png";
 
 			CallCommand = new Command(OnCall);
-			EditContactCommand = new Command(OnEditContact);
-			RemoveContactCommand = new Command(OnRemoved);
-		}
-
-		private async void OnRemoved()
-		{
-			var contacts = await _repository.GetAllAsync<Contact>();
-			var contact = contacts.First(item => item.Equals(Contact.Property));
-			contacts.Remove(contact);
-
-			await _repository.RemoveAllAsync<Contact>();
-
-			await _repository.AddAllAsync(contacts);
-
-			await _navigationService.PopAsync();
 		}
 
 		public ObservableObject<Contact> Contact { get; set; }
 		public ICommand CallCommand { get; set; }
-		public ICommand EditContactCommand { get; set; }
-		public ICommand RemoveContactCommand { get; set; }
-
-		private void OnEditContact()
-		{
-			var contact = Contact.Property;
-			_navigationService.PushEditContactAsync(contact);
-		}
-
+		
 		private void OnCall()
 		{
 			var phoneNumber = Contact.Property.PhoneNumber;
