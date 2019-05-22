@@ -14,7 +14,7 @@ namespace UNLTestTask.DataCore
 			_dbList = new List<object>();
 		}
 
-		public Task AddOrUpdateAllAsync<T>(IEnumerable<T> entities) where T : class, IBaseEntity
+		public Task AddAllAsync<T>(IEnumerable<T> entities) where T : class, IBaseEntity
 		{
 			RemoveAllAsync<T>();
 

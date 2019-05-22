@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UNLTestTask.Models;
-using UNLTestTask.Presentation.ViewModels;
+using UNLTestTask.Presentation.ViewModels.ContactDetails;
+using UNLTestTask.Presentation.ViewModels.Contacts;
+using UNLTestTask.Presentation.ViewModels.EditContact;
 using UNLTestTask.Presentation.Views.ContactDetails;
 using UNLTestTask.Presentation.Views.Contacts;
 using UNLTestTask.Presentation.Views.EditContact;

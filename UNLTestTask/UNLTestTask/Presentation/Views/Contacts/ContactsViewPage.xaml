@@ -74,16 +74,15 @@
                 SeparatorColor="Transparent"
                 controlsBehavior:ListViewTappedBehavior.Command="{Binding TappedCommand}"
                 ItemTemplate="{DynamicResource ContactDataSelector}"
-                AbsoluteLayout.LayoutFlags="PositionProportional">
+                AbsoluteLayout.LayoutFlags="PositionProportional" Margin="5,5,5,0">
             </ListView>
             <StackLayout Orientation="Horizontal"
                          AbsoluteLayout.LayoutBounds="0.5,1,-1,-1"
                          AbsoluteLayout.LayoutFlags="PositionProportional">
-                <Button Text="+" 
-                        WidthRequest="50" 
+                <Button Text="Add contact" 
                         HeightRequest="50" 
                         FontSize="24" 
-                        BackgroundColor="Transparent" Visual="Material"
+                        BackgroundColor="LimeGreen" Visual="Material"
                         Command="{Binding AddContactCommand}"/>
             </StackLayout>
         </AbsoluteLayout>

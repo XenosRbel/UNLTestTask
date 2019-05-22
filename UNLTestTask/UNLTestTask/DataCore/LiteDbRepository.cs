@@ -15,7 +15,7 @@ namespace UNLTestTask.DataCore
 			_liteRepository = liteRepository ?? throw new ArgumentNullException(nameof(liteRepository));
 		}
 
-		public Task AddOrUpdateAllAsync<T>(IEnumerable<T> entities) where T : class, IBaseEntity
+		public Task AddAllAsync<T>(IEnumerable<T> entities) where T : class, IBaseEntity
 		{
 			return Task.Run(() => _liteRepository.Upsert<T>(entities));
 		}

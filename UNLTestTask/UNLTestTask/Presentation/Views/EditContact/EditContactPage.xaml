@@ -8,11 +8,17 @@
                 <Label Text="Name"/>
                 <Entry Placeholder="Input contact name"
                        Text="{Binding Name, Mode=TwoWay}"/>
+                <Label Text="{Binding NameErrorMessage}" 
+                       TextColor="Red"
+                       FontSize="Small" Margin="0,0,0,5"/>
             </StackLayout>
             <StackLayout Orientation="Vertical">
                 <Label Text="Phone number"/>
                 <Entry Placeholder="Input phone number"
                        Text="{Binding PhoneNumber, Mode=TwoWay}"/>
+                <Label Text="{Binding PhoneErrorMessage}" 
+                       TextColor="Red"
+                       FontSize="Small" Margin="0,0,0,5"/>
             </StackLayout>
             <StackLayout Orientation="Vertical">
                 <Label Text="Phone type"/>
@@ -21,6 +27,7 @@
                         SelectedItem="{Binding PhoneType}"/>
             </StackLayout>
             <Button Text="Submit"
+                    IsEnabled="{Binding IsValid}"
                     Command="{Binding SubmitCommand}" 
                     VerticalOptions="End"/>
         </StackLayout>

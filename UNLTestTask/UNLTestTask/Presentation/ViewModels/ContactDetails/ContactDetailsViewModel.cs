@@ -11,24 +11,26 @@ using UNLTestTask.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Presentation.ViewModels
+namespace UNLTestTask.Presentation.ViewModels.ContactDetails
 {
-	public class ContactDetailsViewModel
+	public class ContactDetailsViewModel : IContactDetailsViewModel
 	{
 		private readonly INavigationService _navigationService;
 		private readonly IRepository _repository;
 
-		public ContactDetailsViewModel(INavigationService navigationService, IRepository repository,Contact contact)
+		public ContactDetailsViewModel(INavigationService navigationService, IRepository repository, Contact contact)
 		{
-			_navigationService = navigationService ?? throw  new ArgumentNullException(nameof(navigationService));
+			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
-			Contact = new ObservableObject<Contact> { Property = contact };
+			Contact = new ObservableObject<Contact> { Property = contact ?? throw new ArgumentNullException(nameof(contact))};
+
+			Contact.Property.PhotoPath = Contact.Property.PhoneType == ContactType.None ? "tom.png" : "jerry.png";
 
 			CallCommand = new Command(OnCall);
 			EditContactCommand = new Command(OnEditContact);
 			RemoveContactCommand = new Command(OnRemoved);
-        }
+		}
 
 		private async void OnRemoved()
 		{
@@ -38,7 +40,7 @@ namespace UNLTestTask.Presentation.ViewModels
 
 			await _repository.RemoveAllAsync<Contact>();
 
-			await _repository.AddOrUpdateAllAsync(contacts);
+			await _repository.AddAllAsync(contacts);
 
 			await _navigationService.PopAsync();
 		}
