@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace UNLTestTask.Services
 {
-	public class NavigationService : INavigationService
+	internal class NavigationService : INavigationService
 	{
 		private readonly Application _application;
 		private readonly IContainer _container;
@@ -37,14 +37,16 @@ namespace UNLTestTask.Services
 				_container.GetRepository(),
 				contact);
 			var page = new ContactDetailsViewPage(viewModel);
-
+			
 			return Navigation.PushModalAsync(page);
 		}
 
 		public Task PushContactsPageAsync()
 		{
 			var viewModel = new ContactsViewModel(_container.GetRepository(), 
-				_container.GetNavigationService());
+				_container.GetNavigationService(),
+				_container.GetDialogService(),
+				_container.GetToastNotificationService());
 			var page = new ContactsViewPage(viewModel);
 
 			return Navigation.PushModalAsync(page);
@@ -53,7 +55,8 @@ namespace UNLTestTask.Services
 		public Task PushEditContactAsync()
 		{
 			var viewModel = new EditContactViewModel(_container.GetRepository(), 
-				_container.GetNavigationService());
+				_container.GetNavigationService(),
+				_container.GetToastNotificationService());
 			var page = new EditContactPage(viewModel);
 
 			return Navigation.PushModalAsync(page);
@@ -63,6 +66,7 @@ namespace UNLTestTask.Services
 		{
 			var viewModel = new EditContactViewModel(_container.GetRepository(), 
 				_container.GetNavigationService(), 
+				_container.GetToastNotificationService(),
 				contact);
 			var page = new EditContactPage(viewModel);
 

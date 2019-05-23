@@ -17,11 +17,18 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 	{
 		private readonly IRepository _repository;
 		private readonly INavigationService _navigationService;
+		private readonly IDialogService _dialogService;
+		private readonly IToastNotificationService _toastNotificationService;
 
-		public ContactsViewModel(IRepository repository, INavigationService navigationService)
+		public ContactsViewModel(IRepository repository, 
+			INavigationService navigationService, 
+			IDialogService dialogService, 
+			IToastNotificationService toastNotificationService)
 		{
-			_repository = repository ?? throw new ArgumentNullException(nameof(repository)); ;
-			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService)); ;
+			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
+			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+			_dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
 
 			LoadCommand = new Command(async () => await OnExecuteLoadCommand());
 
@@ -85,6 +92,25 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			var contactViewModel = (ContactViewModel) obj;
 			var objContact = contactViewModel.Contact;
 
+			var dialogResult = false;
+			var completionSource = new TaskCompletionSource<bool>();
+
+			await Task.Run(() =>
+			{
+				Device.BeginInvokeOnMainThread(async () =>
+				{
+					dialogResult = await _dialogService.DisplayAlertAsync("Remove contact",
+						$"Are you sure you want to remove {objContact.Name} ?",
+						"Yes", "No");
+
+					completionSource.SetResult(dialogResult);
+				});
+
+				return completionSource.Task;
+			});
+
+			if (!dialogResult) return;
+
 			var contacts = await _repository.GetAllAsync<Contact>();
 			var contact = contacts.First(item => item.Id == objContact.Id);
 			contacts.Remove(contact);
@@ -93,6 +119,8 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			await _repository.AddAllAsync(contacts);
 
 			OnExecuteLoadCommand();
+
+			_toastNotificationService.LongAlert("Contact successfully removed!");
 		}
 
 		private void OnEditContact(object obj)

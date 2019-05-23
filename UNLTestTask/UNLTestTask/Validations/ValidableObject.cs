@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UNLTestTask.Validations
 {
-	public class ValidableObject<T> : IValidity
+	internal class ValidableObject<T> : IValidity
 	{
 		private readonly IReadOnlyList<IBaseValidationRule<T>> _rules;
 

@@ -16,6 +16,7 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 	{
 		private readonly IRepository _repository;
 		private readonly INavigationService _navigationService;
+		private readonly IToastNotificationService _toastNotificationService;
 		private readonly ValidableObject<Contact> _validableContact;
 		private readonly int _contactId;
 		private string _nameErrorMessage;
@@ -26,10 +27,14 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 		private string[] _phoneTypes;
 		private bool _isValid;
 
-		public EditContactViewModel(IRepository repository, INavigationService navigationService, Contact contact = null)
+		public EditContactViewModel(IRepository repository, 
+			INavigationService navigationService, 
+			IToastNotificationService toastNotificationService, 
+			Contact contact = null)
 		{
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
 
 			var rules = BuildValidationRules();
 			_validableContact = new ValidableObject<Contact>(rules);
@@ -128,6 +133,10 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 			}
 
 			await _repository.AddAllAsync(contacts);
+
+			_toastNotificationService.LongAlert($"Contact successfully updated!");
+
+			await _navigationService.PopAsync();
 		}
 
 		private void Validate()

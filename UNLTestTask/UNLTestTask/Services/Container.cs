@@ -4,11 +4,13 @@ using Xamarin.Forms;
 
 namespace UNLTestTask.Services
 {
-	public class Container : IContainer
+	internal class Container : IContainer
 	{
 		private readonly Application _application;
-		private readonly IRepository _repositoryLazy;
-		private readonly INavigationService _navigationServiceLazy;
+		private readonly IRepository _repository;
+		private readonly INavigationService _navigationService;
+		private readonly IDialogService _dialogService;
+		private readonly IToastNotificationService _toastNotificationService;
 
 		public Container(Application application)
 		{
@@ -17,18 +19,30 @@ namespace UNLTestTask.Services
 			var repository = new MemoryRepository();
 
 			_application = application;
-			_repositoryLazy = repository;
-			_navigationServiceLazy = new NavigationService(_application, this);
+			_repository = repository;
+			_navigationService = new NavigationService(_application, this);
+			_dialogService = new DialogService(_application, this);
+			_toastNotificationService = DependencyService.Get<IToastNotificationService>();
 		}
 
 		public IRepository GetRepository()
 		{
-			return _repositoryLazy;
+			return _repository;
 		}
 
 		public INavigationService GetNavigationService()
 		{
-			return _navigationServiceLazy;
+			return _navigationService;
+		}
+
+		public IDialogService GetDialogService()
+		{
+			return _dialogService;
+		}
+
+		public IToastNotificationService GetToastNotificationService()
+		{
+			return _toastNotificationService;
 		}
 	}
 }

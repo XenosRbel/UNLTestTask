@@ -18,7 +18,7 @@ namespace UNLTestTask.Presentation.Views.Contacts
 		public ContactsViewPage(IContactsViewModel viewModel)
 		{
 			InitializeComponent();
-
+		
 			_viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 			BindingContext = _viewModel;
         }

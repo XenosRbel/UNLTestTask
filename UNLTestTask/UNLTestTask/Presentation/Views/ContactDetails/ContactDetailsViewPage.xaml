@@ -25,13 +25,13 @@
         <AbsoluteLayout VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" 
-                         AbsoluteLayout.LayoutBounds="0.5,0,1,15" BackgroundColor="Black"
+                         AbsoluteLayout.LayoutBounds="0.5,0,1,1" BackgroundColor="Black"
                          Padding="0,5,0,0">
-                <Image Source="tom.png"/>
+                <Image Source="{Binding Contact.Property.PhotoPath}"/>
             </StackLayout>
 
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                         AbsoluteLayout.LayoutBounds="0.5,0.25,1,100">
+                         AbsoluteLayout.LayoutBounds="0.5,0.25,1,1">
                 <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,10,0,0"/>
                 <Button Text="Call"
                         Command="{Binding CallCommand}"/>
@@ -39,7 +39,7 @@
             </StackLayout>
 
             <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                         AbsoluteLayout.LayoutBounds="0.5,0.4,1,15">
+                         AbsoluteLayout.LayoutBounds="0.5,0.4,1,1">
                 <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
                     <Image Source="baseline_person_outline_black_18dp.png"  
                            Style="{DynamicResource DefaultContactImageStyle}"/>

@@ -6,5 +6,7 @@ namespace UNLTestTask.Services
 	{
 		IRepository GetRepository();
 		INavigationService GetNavigationService();
+		IDialogService GetDialogService();
+		IToastNotificationService GetToastNotificationService();
 	}
 }
