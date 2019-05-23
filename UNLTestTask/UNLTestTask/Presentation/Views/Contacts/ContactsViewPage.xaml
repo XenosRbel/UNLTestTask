@@ -23,7 +23,7 @@
                     </Setter.Value>
                 </Setter>
 
-                <Setter Property="Margin" Value="5,5,5,5"/>
+                <Setter Property="BackgroundColor" Value="White"/>
             </Style>
 
             <Style x:Key="DefaultContactCell" TargetType="StackLayout">
@@ -39,18 +39,20 @@
                     <MenuItem Text="Edit" Command="{Binding EditContactCommand}" CommandParameter="{Binding .}"/>
                 </ViewCell.ContextActions>
                 <ViewCell.View>
-                    <Grid Style="{StaticResource DefaultGridContactCell}">
-                        <Image Grid.Column="0" Grid.Row = "0" Source="tom.png"/>
+                    <StackLayout Padding="0,0,0,1">
+                        <Grid Style="{StaticResource DefaultGridContactCell}">
+                            <Image Grid.Column="0" Grid.Row = "0" Source="tom.png"/>
 
-                        <StackLayout Style="{StaticResource DefaultContactCell}">
-                            <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Contact.Name}"
-                                   TextColor="Black"/>
-                            <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Contact.PhoneNumber}"        
-                                   TextColor="Black"/>
-                        </StackLayout>
-                    </Grid>
+                            <StackLayout Style="{StaticResource DefaultContactCell}">
+                                <Label LineBreakMode="TailTruncation"
+                                       Text="{Binding Contact.Name}"
+                                       TextColor="Black"/>
+                                <Label LineBreakMode="TailTruncation"
+                                       Text="{Binding Contact.PhoneNumber}"        
+                                       TextColor="Black"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
                 </ViewCell.View>
             </ViewCell>
         </DataTemplate>
@@ -61,17 +63,19 @@
                     <MenuItem Text="Edit" Command="{Binding EditContactCommand}" CommandParameter="{Binding .}"/>
                 </ViewCell.ContextActions>
                 <ViewCell.View>
-                    <Grid Style="{StaticResource DefaultGridContactCell}">
-                        <Image Grid.Column="0" Grid.Row = "0" Source="jerry.png"/>
+                    <StackLayout Padding="0,0,0,1">
+                        <Grid Style="{StaticResource DefaultGridContactCell}">
+                            <Image Grid.Column="0" Grid.Row = "0" Source="jerry.png"/>
 
-                        <StackLayout Style="{StaticResource DefaultContactCell}">
-                            <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Contact.Name}"/>
-                            <Label LineBreakMode="TailTruncation"
-                                   Text="{Binding Contact.PhoneNumber}"        
-                                   TextColor="DarkCyan"/>
-                        </StackLayout>
-                    </Grid>
+                            <StackLayout Style="{StaticResource DefaultContactCell}">
+                                <Label LineBreakMode="TailTruncation"
+                                       Text="{Binding Contact.Name}"/>
+                                <Label LineBreakMode="TailTruncation"
+                                       Text="{Binding Contact.PhoneNumber}"        
+                                       TextColor="DarkCyan"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
                 </ViewCell.View>
             </ViewCell>
         </DataTemplate>
@@ -90,6 +94,7 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 SeparatorColor="Transparent"
+                BackgroundColor="Gray"
                 controlsBehavior:ListViewTappedBehavior.Command="{Binding TappedCommand}"
                 ItemTemplate="{DynamicResource ContactDataSelector}"
                 AbsoluteLayout.LayoutFlags="PositionProportional">
@@ -100,7 +105,9 @@
                          Margin="0,0,0,5">
                 <Button Text="Add contact" 
                         HeightRequest="50" 
-                        FontSize="24" 
+                        WidthRequest="150"
+                        FontSize="Medium"
+                        Font="Bold"
                         BackgroundColor="LimeGreen" Visual="Material"
                         Command="{Binding AddContactCommand}"/>
             </StackLayout>

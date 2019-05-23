@@ -2,45 +2,61 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UNLTestTask.Presentation.Views.ContactDetails.ContactDetailsViewPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="DefaultContactImageStyle" TargetType="Image">
+                <Setter Property="WidthRequest" Value="25"/>
+                <Setter Property="HeightRequest" Value="25"/>
+            </Style>
+            <Style x:Key="DefaultContactInfoStyle" TargetType="Label">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="Margin" Value="6,0,0,0"/>
+                <Setter Property="LineBreakMode" Value="WordWrap"/>
+                <Setter Property="TextColor" Value="SaddleBrown"/>
+            </Style>
+            <Style x:Key="DefaultInfoGroupStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Spacing" Value="0"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <RelativeLayout>
-            <StackLayout HorizontalOptions="Center"
-                         RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
-                         RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=0}"
-                         RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
-                         RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
-                <Grid Padding="5,5,5,5"
-                      VerticalOptions="CenterAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="0.4*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Column="0" Grid.Row = "0" Source="{Binding Contact.Property.PhotoPath}"/>
-
-                    <StackLayout Grid.Column="0" Grid.Row = "1" 
-                                 Margin="5,10, 5, 5"
-                                 HorizontalOptions="CenterAndExpand">
-                        <Label LineBreakMode="TailTruncation"
-                               Text="{Binding Contact.Property.Name}"
-                               TextColor="Black"/>
-                        <Label LineBreakMode="TailTruncation"
-                               Text="{Binding Contact.Property.PhoneNumber}"        
-                               TextColor="Black"/>
-                    </StackLayout>
-
-                    <StackLayout Grid.Column="0" Grid.Row = "2">
-                        <Button Text="Call"
-                                Margin="20, 5, 20, 0"
-                                Command="{Binding CallCommand}"/>
-                    </StackLayout>
-                </Grid>
+        <AbsoluteLayout VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand">
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" 
+                         AbsoluteLayout.LayoutBounds="0.5,0,1,15" BackgroundColor="Black"
+                         Padding="0,5,0,0">
+                <Image Source="tom.png"/>
             </StackLayout>
-        </RelativeLayout>
+
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                         AbsoluteLayout.LayoutBounds="0.5,0.25,1,100">
+                <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,10,0,0"/>
+                <Button Text="Call"
+                        Command="{Binding CallCommand}"/>
+                <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,0,0,10"/>
+            </StackLayout>
+
+            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                         AbsoluteLayout.LayoutBounds="0.5,0.4,1,15">
+                <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
+                    <Image Source="baseline_person_outline_black_18dp.png"  
+                           Style="{DynamicResource DefaultContactImageStyle}"/>
+                    <StackLayout>
+                        <Label Text="{Binding Contact.Property.Name}" Style="{StaticResource DefaultContactInfoStyle}"/>
+                        <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="6,-5,0,0"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
+                    <Image Source="baseline_local_phone_black_18dp.png" 
+                           Style="{DynamicResource DefaultContactImageStyle}"/>
+                    <StackLayout>
+                        <Label Text="{Binding Contact.Property.PhoneNumber}" Style="{StaticResource DefaultContactInfoStyle}"/>
+                        <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="6,-5,0,0"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

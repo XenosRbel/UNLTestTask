@@ -36,9 +36,9 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 
 			SubmitCommand = new Command(OnSubmit, () => IsValid);
 
-			Name = contact?.Name;
-			PhoneNumber = contact?.PhoneNumber;
-			PhoneType = contact?.PhoneType.ToString();
+			_name = contact?.Name;
+			_phoneNumber = contact?.PhoneNumber;
+			_phoneType = contact?.PhoneType.ToString();
 			PhoneTypes = Enum.GetNames(typeof(ContactType));
 			_contactId = contact?.Id ?? -1;
 		}

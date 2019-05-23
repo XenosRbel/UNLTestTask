@@ -2,31 +2,74 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UNLTestTask.Presentation.Views.EditContact.EditContactPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ErrorMessageStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Red"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="Margin" Value="35,-10,0,0"/>
+            </Style>
+            <Style x:Key="DefaultContactImageStyle" TargetType="Image">
+                <Setter Property="WidthRequest" Value="25"/>
+                <Setter Property="HeightRequest" Value="25"/>
+            </Style>
+            <Style x:Key="DefaultContactEditDataStyle" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style x:Key="DefaultEditedGroupStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Vertical"/>
+                <Setter Property="Spacing" Value="0"/>
+            </Style>
+            <Style x:Key="DefaultGroupTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="Margin" Value="33,0,0,0"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Orientation="Vertical">
-                <Label Text="Name"/>
-                <Entry Placeholder="Input contact name"
-                       Text="{Binding Name, Mode=TwoWay}"/>
+        <StackLayout Margin="5">
+            <StackLayout Style="{StaticResource DefaultEditedGroupStyle}">
+                <Label Text="Name" Style="{StaticResource DefaultGroupTitleStyle}"/>
+                
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="baseline_person_outline_black_18dp.png" 
+                           Style="{DynamicResource DefaultContactImageStyle}"/>
+                    <Entry Placeholder="Input contact name"
+                           Style="{DynamicResource DefaultContactEditDataStyle}"
+                           Text="{Binding Name, Mode=TwoWay}"/>
+                </StackLayout>
+
                 <Label Text="{Binding NameErrorMessage}" 
-                       TextColor="Red"
-                       FontSize="Small" Margin="0,0,0,5"/>
+                       Style="{DynamicResource ErrorMessageStyle}"/>
             </StackLayout>
-            <StackLayout Orientation="Vertical">
-                <Label Text="Phone number"/>
-                <Entry Placeholder="Input phone number"
-                       Text="{Binding PhoneNumber, Mode=TwoWay}"/>
-                <Label Text="{Binding PhoneErrorMessage}" 
-                       TextColor="Red"
-                       FontSize="Small" Margin="0,0,0,5"/>
-            </StackLayout>
-            <StackLayout Orientation="Vertical">
-                <Label Text="Phone type"/>
-                <Picker Title="Select a phone type"
+
+            <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,10,0,10"/>
+
+            <StackLayout Style="{StaticResource DefaultEditedGroupStyle}">
+                <Label Text="Phone" Style="{StaticResource DefaultGroupTitleStyle}"/>
+
+                <Picker Title="Phone type"
+                        HorizontalOptions="Start"
+                        Margin="31,0,0,-15"
+                        WidthRequest="125"
                         ItemsSource="{Binding PhoneTypes}"
                         SelectedItem="{Binding PhoneType}"/>
+
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="baseline_local_phone_black_18dp.png" 
+                           Style="{DynamicResource DefaultContactImageStyle}"/>
+                    <Entry Placeholder="Phone number"
+                           Style="{DynamicResource DefaultContactEditDataStyle}"
+                           Text="{Binding PhoneNumber, Mode=TwoWay}"/>
+                </StackLayout>
+
+                <Label Text="{Binding PhoneErrorMessage}"
+                       Style="{DynamicResource ErrorMessageStyle}"/>
             </StackLayout>
+            
             <Button Text="Submit"
+                    FontSize="Medium"
+                    Font="Bold"
                     IsEnabled="{Binding IsValid}"
                     Command="{Binding SubmitCommand}" 
                     VerticalOptions="End"/>
