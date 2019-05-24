@@ -3,6 +3,119 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UNLTestTask.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="ListContactsBackgroundColor">Gray</Color>
+            <Color x:Key="ButtonCallColor">Black</Color>
+            <Color x:Key="ButtonCallTextColor">Yellow</Color>
+            <Color x:Key="ButtonAddContactColor">LimeGreen</Color>
+            <Color x:Key="ButtonSubmitTextColor">AntiqueWhite</Color>
+            <Color x:Key="PhoneNumberTextColor">DarkCyan</Color>
+            <Color x:Key="DefaultTextColor">Black</Color>
 
+            <x:Double x:Key="Double.NegativeIndent05X">-4</x:Double>
+            <x:Double x:Key="Double.NegativeIndent1X">-8</x:Double>
+            <x:Double x:Key="Double.NegativeIndent2X">-16</x:Double>
+            <x:Double x:Key="Double.Line">1</x:Double>
+
+            <x:Double x:Key="Size05X">4</x:Double>
+            <x:Double x:Key="Size1X">8</x:Double>
+            <x:Double x:Key="Size2X">16</x:Double>
+            <x:Double x:Key="Size3X">24</x:Double>
+            <x:Double x:Key="Size4X">32</x:Double>
+            <x:Double x:Key="Size16X">128</x:Double>
+
+            <Thickness x:Key="Thickness.ElemBetweenSplitter" Bottom="{StaticResource Size1X}" Left="0" Right="0" Top="{StaticResource Size1X}"/>
+            <Thickness x:Key="Thickness.Underline" Bottom="0" Left="{StaticResource Double.NegativeIndent05X}" Right="0" Top="0"/>
+            <Thickness x:Key="Thickness.PhonePicker" Bottom="{StaticResource Double.NegativeIndent2X}" Left="{StaticResource Size4X}" Right="0" Top="0"/>
+            <Thickness x:Key="Thickness.ErrorMessage" Left="{StaticResource Size4X}" Top="{StaticResource Double.NegativeIndent1X}" Right="0" Bottom="0"/>
+            <Thickness x:Key="Thickness.IndentBottom" Bottom="{StaticResource Size1X}" Left="0" Right="0" Top="0"/>
+            <Color x:Key="Color.Grid.Cell">White</Color>
+
+            <Style x:Key="Style.BoxViewSplitterElem" TargetType="BoxView">
+                <Setter Property="Margin" Value="{StaticResource Thickness.ElemBetweenSplitter}"/>
+                <Setter Property="BackgroundColor" Value="Gray"/>
+                <Setter Property="HeightRequest" Value="{StaticResource Double.Line}"/>
+            </Style>
+
+            <Style x:Key="Style.Underline" TargetType="BoxView">
+                <Setter Property="Margin" Value="{StaticResource Thickness.Underline}"/>
+                <Setter Property="BackgroundColor" Value="Gray"/>
+                <Setter Property="HeightRequest" Value="{StaticResource Double.Line}"/>
+            </Style>
+            <Style x:Key="Style.Default.Contact.HelpIcon" TargetType="Image">
+                <Setter Property="WidthRequest" Value="25"/>
+                <Setter Property="HeightRequest" Value="25"/>
+            </Style>
+            <Style x:Key="DefaultContactInfoStyle" TargetType="Label">
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="LineBreakMode" Value="WordWrap"/>
+                <Setter Property="TextColor" Value="SaddleBrown"/>
+            </Style>
+            <Style x:Key="DefaultInfoGroupStyle" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Spacing" Value="{StaticResource Size1X}"/>
+                <Setter Property="Margin" Value="{StaticResource Thickness.IndentBottom}"/>
+            </Style>
+            <Style x:Key="Style.ErrorMessage" TargetType="Label">
+                <Setter Property="TextColor" Value="Red"/>
+                <Setter Property="FontSize" Value="{StaticResource Size1X}"/>
+                <Setter Property="Margin" Value="{StaticResource Thickness.ErrorMessage}"/>
+            </Style>
+            <Style x:Key="Style.Default.Input.ContactData" TargetType="Entry">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            </Style>
+            <Style x:Key="Style.Default.EditedGroup" TargetType="StackLayout">
+                <Setter Property="Orientation" Value="Vertical"/>
+                <Setter Property="Spacing" Value="0"/>
+            </Style>
+            <Style x:Key="Style.Default.GroupTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="Margin" Value="32,0,0,0"/>
+            </Style>
+            <Style x:Key="Style.Default.Button" TargetType="Button">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="Font" Value="Italic"/>
+                <Setter Property="VerticalOptions" Value="End"/>
+            </Style>
+            <Style x:Key="Style.ButtonCall" TargetType="Button" BasedOn="{StaticResource Style.Default.Button}">
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonCallColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource ButtonCallTextColor}"/>
+                <Setter Property="Text" Value="Call"/>
+            </Style>
+            <Style x:Key="Style.Default.SubmitButton" TargetType="Button" BasedOn="{StaticResource Style.Default.Button}">
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonSubmitTextColor}"/>
+            </Style>
+            <Style x:Key="Style.Default.AddContactButton" TargetType="Button" BasedOn="{StaticResource Style.Default.Button}">
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonAddContactColor}"/>
+            </Style>
+
+            <Style x:Key="Style.Default.Grid.Cell.Contact" TargetType="Grid">
+                <Setter Property="RowDefinitions">
+                    <Setter.Value>
+                        <RowDefinitionCollection>
+                            <RowDefinition Height="128"/>
+                        </RowDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ColumnDefinitions">
+                    <Setter.Value>
+                        <ColumnDefinitionCollection>
+                            <ColumnDefinition Width="56"/>
+                            <ColumnDefinition Width="*"/>
+                        </ColumnDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="BackgroundColor" Value="{StaticResource Color.Grid.Cell}"/>
+            </Style>
+
+            <Style x:Key="Style.Default.Cell.DataInfo" TargetType="StackLayout">
+                <Setter Property="Grid.Column" Value="1"/>
+                <Setter Property="Grid.Row" Value="0"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

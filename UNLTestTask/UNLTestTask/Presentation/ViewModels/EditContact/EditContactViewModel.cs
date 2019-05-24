@@ -134,7 +134,7 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 
 			await _repository.AddAllAsync(contacts);
 
-			_toastNotificationService.LongAlert($"Contact successfully updated!");
+			Device.BeginInvokeOnMainThread((() => _toastNotificationService.LongAlert($"Contact successfully updated!")));
 
 			await _navigationService.PopAsync();
 		}

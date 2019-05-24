@@ -6,7 +6,7 @@ using UNLTestTask.Services;
 [assembly: Xamarin.Forms.Dependency(typeof(ToastNotificationService))]
 namespace UNLTestTask.iOS.Modules
 {
-	public class ToastNotificationService : IToastNotificationService
+	internal class ToastNotificationService : IToastNotificationService
 	{
 		private const double LongDelay = 3.5;
 		private const double ShortDelay = 2.0;
@@ -16,11 +16,11 @@ namespace UNLTestTask.iOS.Modules
 
 		public void LongAlert(string message)
 		{
-			ShowAlert(message, LongDelay);
+			UIApplication.SharedApplication.InvokeOnMainThread(() => ShowAlert(message, LongDelay));
 		}
 		public void ShortAlert(string message)
 		{
-			ShowAlert(message, ShortDelay);
+			UIApplication.SharedApplication.InvokeOnMainThread(() => ShowAlert(message, ShortDelay));
 		}
 
 		private void ShowAlert(string message, double seconds)

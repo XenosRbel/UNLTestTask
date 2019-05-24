@@ -11,23 +11,18 @@ using Xamarin.Forms.Xaml;
 namespace UNLTestTask.Presentation.Views.Contacts
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ContactsViewPage : ContentPage
+    public partial class ContactsViewPage
     {
-        private readonly IContactsViewModel _viewModel;
-
-		public ContactsViewPage(IContactsViewModel viewModel)
+	    public ContactsViewPage(IContactsViewModel viewModel) : base(viewModel)
 		{
 			InitializeComponent();
-		
-			_viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
-			BindingContext = _viewModel;
-        }
+		}
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
-            _viewModel.LoadCommand.Execute(null);
+            ViewModel.LoadCommand.Execute(null);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UNLTestTask.Models;
 using UNLTestTask.Presentation.ViewModels.ContactDetails;
@@ -21,9 +22,6 @@ namespace UNLTestTask.Services
 		{
 			_application = application ?? throw new ArgumentNullException(nameof(application));
 			_container = container ?? throw new ArgumentNullException(nameof(container));
-
-			var page = new MainPage();
-			CreateNewNavigation(page);
 		}
 
 		public Task PopAsync()
@@ -49,7 +47,9 @@ namespace UNLTestTask.Services
 				_container.GetToastNotificationService());
 			var page = new ContactsViewPage(viewModel);
 
-			return Navigation.PushModalAsync(page);
+			CreateNewNavigation(page);
+			
+			return Task.FromResult(true);
 		}
 
 		public Task PushEditContactAsync()

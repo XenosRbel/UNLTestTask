@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UNLTestTask.Validations
 {
-	public class ValidationResult
+	internal class ValidationResult
 	{
 		public bool IsValid => !Errors.Any();
 

@@ -6,16 +6,22 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(ToastNotificationService))]
 namespace UNLTestTask.Droid.Modules
 {
-	public class ToastNotificationService : IToastNotificationService
+	internal class ToastNotificationService : IToastNotificationService
 	{
 		public void LongAlert(string message)
 		{
-			Toast.MakeText(Android.App.Application.Context, message, ToastLength.Long).Show();
+			MainActivity.Current.RunOnUiThread(() =>
+			{
+				Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+			});
 		}
 
 		public void ShortAlert(string message)
 		{
-			Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+			MainActivity.Current.RunOnUiThread(() =>
+			{
+				Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+			});
 		}
 	}
 }

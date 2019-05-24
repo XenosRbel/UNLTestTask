@@ -21,7 +21,7 @@ namespace UNLTestTask.Services
 			_application = application;
 			_repository = repository;
 			_navigationService = new NavigationService(_application, this);
-			_dialogService = new DialogService(_application, this);
+			_dialogService = new DialogService(_application);
 			_toastNotificationService = DependencyService.Get<IToastNotificationService>();
 		}
 

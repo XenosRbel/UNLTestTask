@@ -1,55 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controlsBehavior="clr-namespace:UNLTestTask.ControlsBehavior;assembly=UNLTestTask"
+             xmlns:abstract="clr-namespace:UNLTestTask.Presentation.ViewModels.Contacts;assembly=UNLTestTask"
+             xmlns:views="clr-namespace:UNLTestTask.Presentation.Views;assembly=UNLTestTask"
+             x:TypeArguments="abstract:IContactsViewModel"
              x:Class="UNLTestTask.Presentation.Views.Contacts.ContactsViewPage">
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="DefaultGridContactCell" TargetType="Grid">
-                <Setter Property="RowDefinitions">
-                    <Setter.Value>
-                        <RowDefinitionCollection>
-                            <RowDefinition Height="100"/>
-                        </RowDefinitionCollection>
-                    </Setter.Value>
-                </Setter>
-
-                <Setter Property="ColumnDefinitions">
-                    <Setter.Value>
-                        <ColumnDefinitionCollection>
-                            <ColumnDefinition Width="50"/>
-                            <ColumnDefinition Width="*"/>
-                        </ColumnDefinitionCollection>
-                    </Setter.Value>
-                </Setter>
-
-                <Setter Property="BackgroundColor" Value="White"/>
-            </Style>
-
-            <Style x:Key="DefaultContactCell" TargetType="StackLayout">
-                <Setter Property="Grid.Column" Value="1"/>
-                <Setter Property="Grid.Row" Value="0"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-            </Style>
-        </ResourceDictionary>
         <DataTemplate x:Key="DefaultPhone">
             <ViewCell>
                 <ViewCell.ContextActions>
-                    <MenuItem Text="Remove" Command="{Binding RemoveContactCommand}" CommandParameter="{Binding .}"/>
-                    <MenuItem Text="Edit" Command="{Binding EditContactCommand}" CommandParameter="{Binding .}"/>
+                    <MenuItem Text="Remove" Command="{Binding RemoveContactCommand}" 
+                              CommandParameter="{Binding .}"/>
+                    <MenuItem Text="Edit" Command="{Binding EditContactCommand}" 
+                              CommandParameter="{Binding .}"/>
                 </ViewCell.ContextActions>
                 <ViewCell.View>
                     <StackLayout Padding="0,0,0,1">
-                        <Grid Style="{StaticResource DefaultGridContactCell}">
+                        <Grid Style="{StaticResource Style.Default.Grid.Cell.Contact}">
                             <Image Grid.Column="0" Grid.Row = "0" Source="tom.png"/>
 
-                            <StackLayout Style="{StaticResource DefaultContactCell}">
+                            <StackLayout Style="{StaticResource Style.Default.Cell.DataInfo}">
                                 <Label LineBreakMode="TailTruncation"
                                        Text="{Binding Contact.Name}"
-                                       TextColor="Black"/>
+                                       TextColor="{StaticResource DefaultTextColor}"/>
                                 <Label LineBreakMode="TailTruncation"
                                        Text="{Binding Contact.PhoneNumber}"        
-                                       TextColor="Black"/>
+                                       TextColor="{StaticResource PhoneNumberTextColor}"/>
                             </StackLayout>
                         </Grid>
                     </StackLayout>
@@ -64,15 +41,16 @@
                 </ViewCell.ContextActions>
                 <ViewCell.View>
                     <StackLayout Padding="0,0,0,1">
-                        <Grid Style="{StaticResource DefaultGridContactCell}">
+                        <Grid Style="{StaticResource Style.Default.Grid.Cell.Contact}">
                             <Image Grid.Column="0" Grid.Row = "0" Source="jerry.png"/>
 
-                            <StackLayout Style="{StaticResource DefaultContactCell}">
+                            <StackLayout Style="{StaticResource Style.Default.Cell.DataInfo}">
                                 <Label LineBreakMode="TailTruncation"
-                                       Text="{Binding Contact.Name}"/>
+                                       Text="{Binding Contact.Name}"
+                                       TextColor="{StaticResource DefaultTextColor}"/>
                                 <Label LineBreakMode="TailTruncation"
                                        Text="{Binding Contact.PhoneNumber}"        
-                                       TextColor="DarkCyan"/>
+                                       TextColor="{StaticResource PhoneNumberTextColor}"/>
                             </StackLayout>
                         </Grid>
                     </StackLayout>
@@ -84,7 +62,7 @@
                                      WorkTemplate="{StaticResource WorkPhone}"/>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <ListView
                 ItemsSource="{Binding ContactViewModelsItems}"
                 RefreshCommand="{Binding LoadCommand}"
@@ -94,23 +72,14 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
                 SeparatorColor="Transparent"
-                BackgroundColor="Gray"
+                BackgroundColor="{StaticResource ListContactsBackgroundColor}"
                 controlsBehavior:ListViewTappedBehavior.Command="{Binding TappedCommand}"
                 ItemTemplate="{DynamicResource ContactDataSelector}"
                 AbsoluteLayout.LayoutFlags="PositionProportional">
             </ListView>
-            <StackLayout Orientation="Horizontal"
-                         AbsoluteLayout.LayoutBounds="0.5,1,-1,-1"
-                         AbsoluteLayout.LayoutFlags="PositionProportional" 
-                         Margin="0,0,0,5">
-                <Button Text="Add contact" 
-                        HeightRequest="50" 
-                        WidthRequest="150"
-                        FontSize="Medium"
-                        Font="Bold"
-                        BackgroundColor="LimeGreen" Visual="Material"
-                        Command="{Binding AddContactCommand}"/>
-            </StackLayout>
-        </AbsoluteLayout>
+            <Button Text="Add contact" 
+                    Style="{StaticResource Style.Default.AddContactButton}"
+                    Command="{Binding AddContactCommand}"/>
+        </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</views:ContentPageBase>

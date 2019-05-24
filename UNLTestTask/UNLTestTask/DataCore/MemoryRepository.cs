@@ -12,8 +12,10 @@ namespace UNLTestTask.DataCore
 		public MemoryRepository()
 		{
 			_dbList = new List<object>();
-		}
 
+			FillStaticContactData();
+		}
+		
 		public Task AddAllAsync<T>(IEnumerable<T> entities) where T : class, IBaseEntity
 		{
 			RemoveAllAsync<T>();
@@ -56,6 +58,30 @@ namespace UNLTestTask.DataCore
 			}
 
 			return list;
+		}
+
+		private async void FillStaticContactData()
+		{
+			var contacts = new List<Contact>
+			{
+				new Contact
+				{
+					PhotoPath = "tom.png",
+					Name = "Tom",
+					PhoneNumber = "+375441234569",
+					PhoneType = ContactType.None
+				},
+
+				new Contact
+				{
+					PhotoPath = "jerry.png",
+					Name = "Jerry",
+					PhoneNumber = "+375252236548",
+					PhoneType = ContactType.WorkPhone
+				}
+			};
+
+			await AddAllAsync(contacts);
 		}
 	}
 }

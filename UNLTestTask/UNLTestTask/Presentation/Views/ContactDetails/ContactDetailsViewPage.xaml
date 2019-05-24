@@ -1,62 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<views:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:abstract="clr-namespace:UNLTestTask.Presentation.ViewModels.ContactDetails;assembly=UNLTestTask"
+             xmlns:views="clr-namespace:UNLTestTask.Presentation.Views;assembly=UNLTestTask"
+             x:TypeArguments="abstract:IContactDetailsViewModel"
              x:Class="UNLTestTask.Presentation.Views.ContactDetails.ContactDetailsViewPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style x:Key="DefaultContactImageStyle" TargetType="Image">
-                <Setter Property="WidthRequest" Value="25"/>
-                <Setter Property="HeightRequest" Value="25"/>
-            </Style>
-            <Style x:Key="DefaultContactInfoStyle" TargetType="Label">
-                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
-                <Setter Property="Margin" Value="6,0,0,0"/>
-                <Setter Property="LineBreakMode" Value="WordWrap"/>
-                <Setter Property="TextColor" Value="SaddleBrown"/>
-            </Style>
-            <Style x:Key="DefaultInfoGroupStyle" TargetType="StackLayout">
-                <Setter Property="Orientation" Value="Horizontal"/>
-                <Setter Property="Spacing" Value="0"/>
-                <Setter Property="Margin" Value="0,0,0,10"/>
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <ContentPage.Content>
-        <AbsoluteLayout VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand">
-            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional" 
-                         AbsoluteLayout.LayoutBounds="0.5,0,1,1" BackgroundColor="Black"
-                         Padding="0,5,0,0">
-                <Image Source="{Binding Contact.Property.PhotoPath}"/>
-            </StackLayout>
+        <StackLayout>
+            <Image Source="{Binding Contact.Property.PhotoPath}"/>
 
-            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                         AbsoluteLayout.LayoutBounds="0.5,0.25,1,1">
-                <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,10,0,0"/>
-                <Button Text="Call"
-                        Command="{Binding CallCommand}"/>
-                <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="0,0,0,10"/>
-            </StackLayout>
+            <BoxView Style="{StaticResource Style.BoxViewSplitterElem}"/>
+            <Button Style="{StaticResource Style.ButtonCall}" Command="{Binding CallCommand}"/>
+            <BoxView Style="{StaticResource Style.BoxViewSplitterElem}"/>
 
-            <StackLayout AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                         AbsoluteLayout.LayoutBounds="0.5,0.4,1,1">
-                <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
-                    <Image Source="baseline_person_outline_black_18dp.png"  
-                           Style="{DynamicResource DefaultContactImageStyle}"/>
-                    <StackLayout>
-                        <Label Text="{Binding Contact.Property.Name}" Style="{StaticResource DefaultContactInfoStyle}"/>
-                        <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="6,-5,0,0"/>
-                    </StackLayout>
+            <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
+                <Image Source="person_outline.png"  
+                       Style="{DynamicResource Style.Default.Contact.HelpIcon}"/>
+
+                <StackLayout>
+                    <Label Text="{Binding Contact.Property.Name}" 
+                           Style="{StaticResource DefaultContactInfoStyle}"/>
+
+                    <BoxView Style="{StaticResource Style.Underline}"/>
                 </StackLayout>
-                <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
-                    <Image Source="baseline_local_phone_black_18dp.png" 
-                           Style="{DynamicResource DefaultContactImageStyle}"/>
-                    <StackLayout>
-                        <Label Text="{Binding Contact.Property.PhoneNumber}" Style="{StaticResource DefaultContactInfoStyle}"/>
-                        <BoxView BackgroundColor="Gray" HeightRequest="1" Margin="6,-5,0,0"/>
-                    </StackLayout>
-                </StackLayout>
+
             </StackLayout>
-        </AbsoluteLayout>
+            <StackLayout Style="{StaticResource DefaultInfoGroupStyle}">
+                <Image Source="phone_black.png" 
+                       Style="{DynamicResource Style.Default.Contact.HelpIcon}"/>
+
+                <StackLayout>
+                    <Label Text="{Binding Contact.Property.PhoneNumber}" 
+                           Style="{StaticResource DefaultContactInfoStyle}"/>
+                    <BoxView Style="{StaticResource Style.Underline}"/>
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</views:ContentPageBase>

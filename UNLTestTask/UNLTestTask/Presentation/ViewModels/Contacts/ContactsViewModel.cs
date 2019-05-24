@@ -19,6 +19,7 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 		private readonly INavigationService _navigationService;
 		private readonly IDialogService _dialogService;
 		private readonly IToastNotificationService _toastNotificationService;
+		private bool _isCommandActive;
 
 		public ContactsViewModel(IRepository repository, 
 			INavigationService navigationService, 
@@ -31,42 +32,16 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
 
 			LoadCommand = new Command(async () => await OnExecuteLoadCommand());
-
+			
 			TappedCommand = new Command(OnItemTapped);
 
-			AddContactCommand = new Command(OnAddContact);
+			AddContactCommand = new Command(OnAddContact, () => IsCommandActive);
 			EditContactCommand = new Command(OnEditContact);
 			RemoveContactCommand = new Command(OnRemoved);
 
 			ContactViewModelsItems = new ObservableRangeCollection<ContactViewModel>();
 
-			FillStaticContactData();
-		}
-
-		private async void FillStaticContactData()
-		{
-			var contacts = new List<Contact>
-			{
-				new Contact
-				{
-					PhotoPath = "tom.png",
-					Name = "Tom",
-					PhoneNumber = "+375441234569",
-					PhoneType = ContactType.None,
-					Id = 0
-				},
-
-				new Contact
-				{
-					PhotoPath = "jerry.png",
-					Name = "Jerry",
-					PhoneNumber = "+375252236548",
-					PhoneType = ContactType.None,
-					Id = 1
-				}
-			};
-
-			await _repository.AddAllAsync(contacts);
+			IsCommandActive = true;
 		}
 
 		public ObservableRangeCollection<ContactViewModel> ContactViewModelsItems { get; set; }
@@ -75,6 +50,15 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 		public ICommand AddContactCommand { get; private set; }
 		public ICommand EditContactCommand { get; set; }
 		public ICommand RemoveContactCommand { get; set; }
+		public bool IsCommandActive
+		{
+			get => _isCommandActive;
+			set
+			{
+				SetProperty(ref _isCommandActive, value);
+				((Command)LoadCommand).ChangeCanExecute();
+			}
+		}
 
 		private void OnItemTapped(object obj)
 		{
@@ -84,7 +68,15 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 
 		private void OnAddContact()
 		{
-			Device.BeginInvokeOnMainThread(async () => await _navigationService.PushEditContactAsync());
+			if (!IsCommandActive) return;
+
+			IsCommandActive = false;
+			Device.BeginInvokeOnMainThread(async () =>
+			{
+				await _navigationService.PushEditContactAsync();
+
+				IsCommandActive = true;
+			});
 		}
 
 		private async void OnRemoved(object obj)
@@ -92,22 +84,9 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			var contactViewModel = (ContactViewModel) obj;
 			var objContact = contactViewModel.Contact;
 
-			var dialogResult = false;
-			var completionSource = new TaskCompletionSource<bool>();
-
-			await Task.Run(() =>
-			{
-				Device.BeginInvokeOnMainThread(async () =>
-				{
-					dialogResult = await _dialogService.DisplayAlertAsync("Remove contact",
-						$"Are you sure you want to remove {objContact.Name} ?",
-						"Yes", "No");
-
-					completionSource.SetResult(dialogResult);
-				});
-
-				return completionSource.Task;
-			});
+			var dialogResult = await _dialogService.DisplayAlertAsync("Remove contact",
+				$"Are you sure you want to remove {objContact.Name} ?",
+				"Yes", "No");
 
 			if (!dialogResult) return;
 

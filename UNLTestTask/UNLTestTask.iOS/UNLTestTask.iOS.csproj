@@ -64,6 +64,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -143,9 +146,9 @@
     <BundleResource Include="Resources\jerry.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\baseline_person_outline_black_18dp.png" />
+    <BundleResource Include="Resources\person_outline.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\baseline_local_phone_black_18dp.png" />
+    <BundleResource Include="Resources\phone_black.png" />
   </ItemGroup>
 </Project>

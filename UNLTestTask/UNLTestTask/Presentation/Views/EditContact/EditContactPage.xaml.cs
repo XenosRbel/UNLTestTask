@@ -8,13 +8,11 @@ using Xamarin.Forms.Xaml;
 namespace UNLTestTask.Presentation.Views.EditContact
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class EditContactPage : ContentPage
+	public partial class EditContactPage
 	{
-		public EditContactPage(IEditContactViewModel viewModel)
+		public EditContactPage(IEditContactViewModel viewModel) : base(viewModel)
 		{
 			InitializeComponent();
-
-			BindingContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 		}
 	}
 }
