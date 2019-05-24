@@ -11,9 +11,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommonServiceLocator" Version="2.0.4" />
     <PackageReference Include="LiteDB" Version="4.1.4" />
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+    <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\UNLTestTask.Core\UNLTestTask.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Xamarin.iOS">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\Xamarin.iOS\v1.0\Xamarin.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

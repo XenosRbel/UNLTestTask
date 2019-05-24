@@ -1,9 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using LiteDB;
 
-namespace UNLTestTask.DataCore
+namespace UNLTestTask.Core.DataCore
 {
 	public class LiteDbRepositoryFactory
 	{

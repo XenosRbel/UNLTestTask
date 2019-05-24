@@ -1,4 +1,4 @@
-﻿namespace UNLTestTask.Validations
+﻿namespace UNLTestTask.Core.Validations
 {
 	public interface IValidity
 	{

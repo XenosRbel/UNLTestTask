@@ -1,6 +1,6 @@
 ﻿using Android.Widget;
+using UNLTestTask.Core.Services;
 using UNLTestTask.Droid.Modules;
-using UNLTestTask.Services;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(ToastNotificationService))]

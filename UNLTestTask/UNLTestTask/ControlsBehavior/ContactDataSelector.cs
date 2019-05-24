@@ -1,10 +1,10 @@
-﻿using UNLTestTask.Models;
+﻿using UNLTestTask.Core.Models;
 using UNLTestTask.Presentation.ViewModels.Contacts;
 using Xamarin.Forms;
 
 namespace UNLTestTask.ControlsBehavior
 {
-	public class ContactDataSelector : DataTemplateSelector
+	internal class ContactDataSelector : DataTemplateSelector
 	{
 		public DataTemplate DefaultTemplate { get; set; }
 		public DataTemplate WorkTemplate { get; set; }

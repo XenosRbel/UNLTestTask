@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using UNLTestTask.Models;
+﻿using System.Threading.Tasks;
+using UNLTestTask.Core.Models;
 
 namespace UNLTestTask.Services
 {

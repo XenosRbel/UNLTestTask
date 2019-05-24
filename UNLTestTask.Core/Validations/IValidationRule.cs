@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace UNLTestTask.Validations
+namespace UNLTestTask.Core.Validations
 {
 	public interface IBaseValidationRule<in T>
 	{

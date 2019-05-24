@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using UNLTestTask.Helpers;
-using UNLTestTask.Models;
+﻿using System.Windows.Input;
+using UNLTestTask.Core.Models;
+using UNLTestTask.Core.Presentation.ViewModels;
 
 namespace UNLTestTask.Presentation.ViewModels.Contacts
 {
-	public class ContactViewModel
+	public class ContactViewModel : IContactViewModel
 	{
 		public ContactViewModel(IContactsViewModel contactsViewModel)
 		{
@@ -15,7 +12,7 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			RemoveContactCommand = contactsViewModel.RemoveContactCommand;
 		}
 
-		public Contact Contact{ get; set; }
+		public Contact Contact { get; set; }
 		public ICommand EditContactCommand { get; set; }
 		public ICommand RemoveContactCommand { get; set; }
 	}

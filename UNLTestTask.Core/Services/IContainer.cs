@@ -1,4 +1,5 @@
-﻿using UNLTestTask.DataCore;
+﻿using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Services;
 
 namespace UNLTestTask.Services
 {
@@ -8,5 +9,7 @@ namespace UNLTestTask.Services
 		INavigationService GetNavigationService();
 		IDialogService GetDialogService();
 		IToastNotificationService GetToastNotificationService();
+		IMainThreadService GetMainThreadService();
+		ICommandService GetCommandService();
 	}
 }

@@ -7,10 +7,12 @@ namespace UNLTestTask.Services
 	internal class DialogService : IDialogService
 	{
 		private readonly Application _application;
+		private readonly IMainThreadService _mainThreadService;
 
-		public DialogService(Application application)
+		public DialogService(Application application, IMainThreadService mainThreadService)
 		{
 			_application = application ?? throw new ArgumentNullException(nameof(application));
+			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
 		}
 		public Task DisplayAlertAsync(string title, string message, string cancel)
 		{
@@ -24,7 +26,7 @@ namespace UNLTestTask.Services
 
 			return Task.Run(() =>
 			{
-				Device.BeginInvokeOnMainThread(async () =>
+				_mainThreadService.BeginInvokeOnMainThread(async () =>
 				{
 					dialogResult = await _application.MainPage.DisplayAlert(title, message, accept, cancel);
 

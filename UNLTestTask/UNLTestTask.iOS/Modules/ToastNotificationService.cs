@@ -1,7 +1,7 @@
 ﻿using Foundation;
 using UIKit;
+using UNLTestTask.Core.Services;
 using UNLTestTask.iOS.Modules;
-using UNLTestTask.Services;
 
 [assembly: Xamarin.Forms.Dependency(typeof(ToastNotificationService))]
 namespace UNLTestTask.iOS.Modules

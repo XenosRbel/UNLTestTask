@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UNLTestTask.Models;
+using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Models;
 
-namespace UNLTestTask.DataCore
+namespace UNLTestTask.Core.DataCore
 {
 	public class MemoryRepository : IRepository
 	{
@@ -15,20 +16,20 @@ namespace UNLTestTask.DataCore
 
 			FillStaticContactData();
 		}
-		
+
 		public Task AddAllAsync<T>(IEnumerable<T> entities) where T : class, IBaseEntity
 		{
 			RemoveAllAsync<T>();
 
 			return Task.Run(() =>
 			{
-				entities = AddIndexToEntities<T>(entities);
+				entities = AddIndexToEntities(entities);
 
 				foreach (var entity in entities)
 				{
 					_dbList.Add(entity);
 				}
-				
+
 				return true;
 			});
 		}
@@ -49,7 +50,7 @@ namespace UNLTestTask.DataCore
 
 		private IEnumerable<T> AddIndexToEntities<T>(IEnumerable<T> entities) where T : class, IBaseEntity
 		{
-			var list= entities.ToList();
+			var list = entities.ToList();
 
 			for (int i = 0; i < list.Count; i++)
 			{

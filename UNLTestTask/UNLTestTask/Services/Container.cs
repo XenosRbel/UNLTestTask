@@ -1,5 +1,5 @@
-﻿using System;
-using UNLTestTask.DataCore;
+﻿using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Services;
 using Xamarin.Forms;
 
 namespace UNLTestTask.Services
@@ -11,6 +11,7 @@ namespace UNLTestTask.Services
 		private readonly INavigationService _navigationService;
 		private readonly IDialogService _dialogService;
 		private readonly IToastNotificationService _toastNotificationService;
+		private readonly IMainThreadService _mainThreadService;
 
 		public Container(Application application)
 		{
@@ -21,7 +22,8 @@ namespace UNLTestTask.Services
 			_application = application;
 			_repository = repository;
 			_navigationService = new NavigationService(_application, this);
-			_dialogService = new DialogService(_application);
+			_mainThreadService = new MainThreadService();
+			_dialogService = new DialogService(_application, _mainThreadService);
 			_toastNotificationService = DependencyService.Get<IToastNotificationService>();
 		}
 
@@ -43,6 +45,16 @@ namespace UNLTestTask.Services
 		public IToastNotificationService GetToastNotificationService()
 		{
 			return _toastNotificationService;
+		}
+
+		public IMainThreadService GetMainThreadService()
+		{
+			return _mainThreadService;
+		}
+
+		public ICommandService GetCommandService()
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

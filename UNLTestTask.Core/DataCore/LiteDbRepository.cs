@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LiteDB;
-using UNLTestTask.Models;
+using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Models;
 
-namespace UNLTestTask.DataCore
+namespace UNLTestTask.Core.DataCore
 {
 	public class LiteDbRepository : IRepository
 	{

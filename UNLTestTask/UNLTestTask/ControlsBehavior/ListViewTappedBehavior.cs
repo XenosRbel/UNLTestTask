@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace UNLTestTask.ControlsBehavior
 {
-	public class ListViewTappedBehavior : BindableObject
+	internal class ListViewTappedBehavior : BindableObject
 	{
 		public static readonly BindableProperty CommandProperty =
 			BindableProperty.CreateAttached(

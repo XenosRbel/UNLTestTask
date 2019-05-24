@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using UNLTestTask.DataCore;
-using UNLTestTask.Models;
+using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Models;
+using UNLTestTask.Core.Presentation.ViewModels;
+using UNLTestTask.Core.Services;
+using UNLTestTask.Core.Validations;
+using UNLTestTask.Core.Validations.Rules;
 using UNLTestTask.Services;
-using UNLTestTask.Validations;
-using UNLTestTask.Validations.Rules;
 using Xamarin.Forms;
 
 namespace UNLTestTask.Presentation.ViewModels.EditContact
@@ -17,6 +18,8 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 		private readonly IRepository _repository;
 		private readonly INavigationService _navigationService;
 		private readonly IToastNotificationService _toastNotificationService;
+		private readonly IMainThreadService _mainThreadService;
+		private readonly ICommandService _commandService;
 		private readonly ValidableObject<Contact> _validableContact;
 		private readonly int _contactId;
 		private string _nameErrorMessage;
@@ -29,12 +32,14 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 
 		public EditContactViewModel(IRepository repository, 
 			INavigationService navigationService, 
-			IToastNotificationService toastNotificationService, 
+			IToastNotificationService toastNotificationService,
+			IMainThreadService mainThreadService,
 			Contact contact = null)
 		{
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
+			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
 
 			var rules = BuildValidationRules();
 			_validableContact = new ValidableObject<Contact>(rules);
@@ -134,7 +139,7 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 
 			await _repository.AddAllAsync(contacts);
 
-			Device.BeginInvokeOnMainThread((() => _toastNotificationService.LongAlert($"Contact successfully updated!")));
+			_mainThreadService.BeginInvokeOnMainThread((() => _toastNotificationService.LongAlert($"Contact successfully updated!")));
 
 			await _navigationService.PopAsync();
 		}

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UNLTestTask.Models;
+﻿using System.Collections.Generic;
+using UNLTestTask.Core.Models;
 
-namespace UNLTestTask.Validations.Rules
+namespace UNLTestTask.Core.Validations.Rules
 {
 	public class IsNameNotNullOrWhiteSpace : IBaseValidationRule<Contact>
 	{

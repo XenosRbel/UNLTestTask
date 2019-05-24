@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace UNLTestTask.Validations
+namespace UNLTestTask.Core.Validations
 {
-	internal class ValidableObject<T> : IValidity
+	public class ValidableObject<T> : IValidity
 	{
 		private readonly IReadOnlyList<IBaseValidationRule<T>> _rules;
 

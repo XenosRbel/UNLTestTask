@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using UNLTestTask.Models; 
+using UNLTestTask.Core.Models;
 
-namespace UNLTestTask.DataCore
+namespace UNLTestTask.Core.DataCore
 {
 	public interface IRepository
 	{

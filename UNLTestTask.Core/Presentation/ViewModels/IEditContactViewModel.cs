@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace UNLTestTask.Presentation.ViewModels.EditContact
+namespace UNLTestTask.Core.Presentation.ViewModels
 {
 	public interface IEditContactViewModel
 	{

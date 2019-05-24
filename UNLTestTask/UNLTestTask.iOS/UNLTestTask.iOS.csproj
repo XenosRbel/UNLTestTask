@@ -134,6 +134,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\UNLTestTask.Core\UNLTestTask.Core.csproj">
+      <Project>{30116881-34D5-4B40-B2CF-E467CADCA05C}</Project>
+      <Name>UNLTestTask.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UNLTestTask\UNLTestTask.csproj">
       <Project>{8C0DC2DA-6834-4551-BB73-81EB6C0B95FE}</Project>
       <Name>UNLTestTask</Name>

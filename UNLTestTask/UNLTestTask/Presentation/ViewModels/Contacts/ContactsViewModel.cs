@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using LiteDB;
-using UNLTestTask.DataCore;
-using UNLTestTask.Helpers;
-using UNLTestTask.Models;
+using GalaSoft.MvvmLight.Command;
+using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Helpers;
+using UNLTestTask.Core.Models;
+using UNLTestTask.Core.Presentation.ViewModels;
+using UNLTestTask.Core.Services;
 using UNLTestTask.Services;
 using Xamarin.Forms;
 
@@ -19,32 +21,38 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 		private readonly INavigationService _navigationService;
 		private readonly IDialogService _dialogService;
 		private readonly IToastNotificationService _toastNotificationService;
+		private readonly IMainThreadService _mainThreadService;
 		private bool _isCommandActive;
 
 		public ContactsViewModel(IRepository repository, 
 			INavigationService navigationService, 
 			IDialogService dialogService, 
-			IToastNotificationService toastNotificationService)
+			IToastNotificationService toastNotificationService,
+			IMainThreadService mainThreadService)
 		{
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 			_dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
+			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
 
 			LoadCommand = new Command(async () => await OnExecuteLoadCommand());
 			
 			TappedCommand = new Command(OnItemTapped);
 
-			AddContactCommand = new Command(OnAddContact, () => _isCommandActive);
+			AddContactCommand = new Command(OnAddContact, (o) => _isCommandActive);
 			EditContactCommand = new Command(OnEditContact);
 			RemoveContactCommand = new Command(OnRemoved);
 
-			ContactViewModelsItems = new ObservableRangeCollection<ContactViewModel>();
+			ContactViewModelsItems = new ObservableRangeCollection<IContactViewModel>();
 
 			IsCommandActive = true;
-		}
 
-		public ObservableRangeCollection<ContactViewModel> ContactViewModelsItems { get; set; }
+			ContactCommand = new RelayCommand<object>(OnAddContact);
+		}
+		public RelayCommand<object> ContactCommand { get; set; }
+
+		public ObservableRangeCollection<IContactViewModel> ContactViewModelsItems { get; set; }
 		public ICommand LoadCommand { get; private set; }
 		public ICommand TappedCommand { get; private set; }
 		public ICommand AddContactCommand { get; private set; }
@@ -63,14 +71,14 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 		private void OnItemTapped(object obj)
 		{
 			var contact = (ContactViewModel)obj;
-			Device.BeginInvokeOnMainThread(async () => await _navigationService.PushContactDetailsPageAsync(contact.Contact));
+			_mainThreadService.BeginInvokeOnMainThread(async () => await _navigationService.PushContactDetailsPageAsync(contact.Contact));
 		}
 
-		private void OnAddContact()
+		private void OnAddContact(object obj = null)
 		{
 			IsCommandActive = false;
 
-			Device.BeginInvokeOnMainThread(async () =>
+			_mainThreadService.BeginInvokeOnMainThread(async () =>
 			{
 				await _navigationService.PushEditContactAsync();
 

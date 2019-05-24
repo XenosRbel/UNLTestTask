@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using UNLTestTask.Models;
+using UNLTestTask.Core.Models;
 using UNLTestTask.Presentation.ViewModels.ContactDetails;
 using UNLTestTask.Presentation.ViewModels.Contacts;
 using UNLTestTask.Presentation.ViewModels.EditContact;
@@ -31,8 +30,8 @@ namespace UNLTestTask.Services
 
 		public Task PushContactDetailsPageAsync(Contact contact)
 		{
-			var viewModel = new ContactDetailsViewModel(_container.GetNavigationService(), 
-				_container.GetRepository(),
+			var viewModel = new ContactDetailsViewModel(
+				_container.GetMainThreadService(),
 				contact);
 			var page = new ContactDetailsViewPage(viewModel);
 			
@@ -44,7 +43,8 @@ namespace UNLTestTask.Services
 			var viewModel = new ContactsViewModel(_container.GetRepository(), 
 				_container.GetNavigationService(),
 				_container.GetDialogService(),
-				_container.GetToastNotificationService());
+				_container.GetToastNotificationService(),
+				_container.GetMainThreadService());
 			var page = new ContactsViewPage(viewModel);
 
 			CreateNewNavigation(page);
@@ -56,7 +56,8 @@ namespace UNLTestTask.Services
 		{
 			var viewModel = new EditContactViewModel(_container.GetRepository(), 
 				_container.GetNavigationService(),
-				_container.GetToastNotificationService());
+				_container.GetToastNotificationService(),
+				_container.GetMainThreadService());
 			var page = new EditContactPage(viewModel);
 
 			return Navigation.PushModalAsync(page);
@@ -67,6 +68,7 @@ namespace UNLTestTask.Services
 			var viewModel = new EditContactViewModel(_container.GetRepository(), 
 				_container.GetNavigationService(), 
 				_container.GetToastNotificationService(),
+				_container.GetMainThreadService(),
 				contact);
 			var page = new EditContactPage(viewModel);
 

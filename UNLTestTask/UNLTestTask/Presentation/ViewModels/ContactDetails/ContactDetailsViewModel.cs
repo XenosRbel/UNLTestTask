@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using UNLTestTask.DataCore;
-using UNLTestTask.Helpers;
-using UNLTestTask.Models;
-using UNLTestTask.Presentation.Views.EditContact;
+using UNLTestTask.Core.DataCore;
+using UNLTestTask.Core.Helpers;
+using UNLTestTask.Core.Models;
+using UNLTestTask.Core.Presentation.ViewModels;
 using UNLTestTask.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -15,13 +14,13 @@ namespace UNLTestTask.Presentation.ViewModels.ContactDetails
 {
 	public class ContactDetailsViewModel : IContactDetailsViewModel
 	{
-		private readonly INavigationService _navigationService;
-		private readonly IRepository _repository;
+		private readonly IMainThreadService _mainThreadService;
 
-		public ContactDetailsViewModel(INavigationService navigationService, IRepository repository, Contact contact)
+		public ContactDetailsViewModel(
+			IMainThreadService mainThreadService,
+			Contact contact)
 		{
-			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
-			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
+			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
 
 			Contact = new ObservableObject<Contact> { Property = contact ?? throw new ArgumentNullException(nameof(contact))};
 
@@ -36,10 +35,10 @@ namespace UNLTestTask.Presentation.ViewModels.ContactDetails
 		private void OnCall()
 		{
 			var phoneNumber = Contact.Property.PhoneNumber;
-			Device.BeginInvokeOnMainThread(async () => await Call(phoneNumber));
+			_mainThreadService.BeginInvokeOnMainThread(() => Call(phoneNumber));
 		}
 
-		private async Task Call(string phoneNumber)
+		private static void Call(string phoneNumber)
 		{
 			try
 			{

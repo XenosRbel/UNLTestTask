@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:abstract="clr-namespace:UNLTestTask.Presentation.ViewModels.EditContact;assembly=UNLTestTask"
              xmlns:views="clr-namespace:UNLTestTask.Presentation.Views;assembly=UNLTestTask"
+             xmlns:abstract="clr-namespace:UNLTestTask.Core.Presentation.ViewModels;assembly=UNLTestTask.Core"
              x:TypeArguments="abstract:IEditContactViewModel"
              x:Class="UNLTestTask.Presentation.Views.EditContact.EditContactPage">
     <ContentPage.Content>

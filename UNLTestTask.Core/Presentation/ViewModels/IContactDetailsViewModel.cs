@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
-using UNLTestTask.Helpers;
-using UNLTestTask.Models;
+using UNLTestTask.Core.Helpers;
+using UNLTestTask.Core.Models;
 
-namespace UNLTestTask.Presentation.ViewModels.ContactDetails
+namespace UNLTestTask.Core.Presentation.ViewModels
 {
 	public interface IContactDetailsViewModel
 	{

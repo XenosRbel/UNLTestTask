@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace UNLTestTask.Validations
+namespace UNLTestTask.Core.Validations
 {
-	internal class ValidationResult
+	public class ValidationResult
 	{
 		public bool IsValid => !Errors.Any();
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using UNLTestTask.DataCore;
-using UNLTestTask.Presentation.ViewModels.ContactDetails;
-using UNLTestTask.Presentation.Views.EditContact;
-using Xamarin.Essentials;
+﻿using UNLTestTask.Core.Presentation.ViewModels;
 using Xamarin.Forms.Xaml;
 
 namespace UNLTestTask.Presentation.Views.ContactDetails

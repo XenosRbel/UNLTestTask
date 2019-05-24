@@ -1,4 +1,4 @@
-﻿namespace UNLTestTask.Services
+﻿namespace UNLTestTask.Core.Services
 {
 	public interface IToastNotificationService
 	{

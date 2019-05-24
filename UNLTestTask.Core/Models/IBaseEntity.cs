@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UNLTestTask.Models
+namespace UNLTestTask.Core.Models
 {
 	public interface IBaseEntity
 	{
