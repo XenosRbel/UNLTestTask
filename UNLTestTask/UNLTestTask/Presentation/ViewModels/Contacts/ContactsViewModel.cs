@@ -35,7 +35,7 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			
 			TappedCommand = new Command(OnItemTapped);
 
-			AddContactCommand = new Command(OnAddContact, () => IsCommandActive);
+			AddContactCommand = new Command(OnAddContact, () => _isCommandActive);
 			EditContactCommand = new Command(OnEditContact);
 			RemoveContactCommand = new Command(OnRemoved);
 
@@ -56,7 +56,7 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 			set
 			{
 				SetProperty(ref _isCommandActive, value);
-				((Command)LoadCommand).ChangeCanExecute();
+				((Command)AddContactCommand).ChangeCanExecute();
 			}
 		}
 
@@ -68,9 +68,8 @@ namespace UNLTestTask.Presentation.ViewModels.Contacts
 
 		private void OnAddContact()
 		{
-			if (!IsCommandActive) return;
-
 			IsCommandActive = false;
+
 			Device.BeginInvokeOnMainThread(async () =>
 			{
 				await _navigationService.PushEditContactAsync();
