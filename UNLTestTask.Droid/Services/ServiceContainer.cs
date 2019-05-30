@@ -24,11 +24,6 @@ namespace UNLTestTask.Droid.Services
 			return _repository;
 		}
 
-		public INavigationService GetNavigationService()
-		{
-			throw new NotImplementedException();
-		}
-
 		public IDialogService GetDialogService()
 		{
 			return _dialogService;

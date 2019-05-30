@@ -39,9 +39,7 @@ namespace UNLTestTask.Core.Presentation.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		public void OnPropertyChanged([CallerMemberName] string propertyName = "")
 		{
-			var changed = PropertyChanged;
-
-			changed?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

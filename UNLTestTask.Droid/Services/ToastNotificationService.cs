@@ -1,5 +1,6 @@
 ﻿using Android.Widget;
 using UNLTestTask.Core.Services;
+using UNLTestTask.Droid.Helpers;
 
 namespace UNLTestTask.Droid.Services
 {
@@ -16,7 +17,7 @@ namespace UNLTestTask.Droid.Services
 		{
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+				Toast.MakeText(CurrentActivityHelper.Current.AppContext, message, ToastLength.Short).Show();
 			});
 		}
 
@@ -24,7 +25,7 @@ namespace UNLTestTask.Droid.Services
 		{
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short).Show();
+				Toast.MakeText(CurrentActivityHelper.Current.AppContext, message, ToastLength.Short).Show();
 			});
 		}
 	}

@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Runtime;
 using UNLTestTask.Core.Services;
+using UNLTestTask.Droid.Helpers;
 using UNLTestTask.Droid.Services;
 
 namespace UNLTestTask.Droid
@@ -19,6 +20,7 @@ namespace UNLTestTask.Droid
 		public override void OnCreate()
 		{
 			base.OnCreate();
+			CurrentActivityHelper.Current.Init(this);
 
 			Container = new ServiceContainer();
 			NavigationService = new NavigationService(Container);

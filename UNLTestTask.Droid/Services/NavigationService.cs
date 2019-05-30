@@ -24,7 +24,7 @@ namespace UNLTestTask.Droid.Services
 
 		public Task PopAsync()
 		{
-			BaseActivity.Current.OnBackPressed();
+			CurrentActivityHelper.Current.Activity.OnBackPressed();
 			return Task.FromResult(true);
 		}
 
@@ -34,10 +34,10 @@ namespace UNLTestTask.Droid.Services
 
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var intent = new Intent(Application.Context, typeof(ContactDetailsPage));
+				var intent = new Intent(CurrentActivityHelper.Current.AppContext, typeof(ContactDetailsActivity));
 				intent.PutNavigatedParam(contactDetailViewModel);
 
-				Application.Context.StartActivity(intent);
+				CurrentActivityHelper.Current.AppContext.StartActivity(intent);
 			});
 
 			return Task.FromResult(true);
@@ -53,10 +53,10 @@ namespace UNLTestTask.Droid.Services
 
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var intent = new Intent(Application.Context, typeof(ContactsPage));
+				var intent = new Intent(CurrentActivityHelper.Current.AppContext, typeof(ContactsActivity));
 				intent.PutNavigatedParam(contactsViewModel);
 
-				Application.Context.StartActivity(intent);
+				CurrentActivityHelper.Current.AppContext.StartActivity(intent);
 			});
 
 			return Task.FromResult(true);
@@ -71,11 +71,11 @@ namespace UNLTestTask.Droid.Services
 
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var intent = new Intent(Application.Context, typeof(EditContactPage));
+				var intent = new Intent(CurrentActivityHelper.Current.AppContext, typeof(EditContactActivity));
 				intent.SetFlags(ActivityFlags.SingleTop);
 				intent.PutNavigatedParam(editContactViewModel);
 
-				Application.Context.StartActivity(intent);
+				CurrentActivityHelper.Current.AppContext.StartActivity(intent);
 			});
 
 			return Task.FromResult(true);
@@ -91,11 +91,11 @@ namespace UNLTestTask.Droid.Services
 
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var intent = new Intent(Application.Context, typeof(EditContactPage));
+				var intent = new Intent(CurrentActivityHelper.Current.AppContext, typeof(EditContactActivity));
 				intent.SetFlags(ActivityFlags.SingleTop);
 				intent.PutNavigatedParam(editContactViewModel);
 
-				Application.Context.StartActivity(intent);
+				CurrentActivityHelper.Current.AppContext.StartActivity(intent);
 			});
 
 			return Task.FromResult(true);

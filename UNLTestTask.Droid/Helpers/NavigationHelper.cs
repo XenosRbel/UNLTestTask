@@ -10,6 +10,23 @@ namespace UNLTestTask.Droid.Helpers
 		private const string ParameterKeyName = "ViewModelKey";
 		private static readonly Dictionary<string, object> ViewModelDictionary = new Dictionary<string, object>();
 
+		static NavigationParameterHelper()
+		{
+			CurrentActivityHelper.Current.ActivityStateChanged += OnCurrentActivityStateChanged;
+		}
+
+		private static void OnCurrentActivityStateChanged(object sender, ActivityEventArgs eventArgs)
+		{
+			if (eventArgs.State == ActivityState.Destroyed)
+			{
+				var stringExtra = eventArgs.Activity.Intent.GetStringExtra(ParameterKeyName);
+
+				if (string.IsNullOrWhiteSpace(stringExtra)) return;
+				
+				ViewModelDictionary.Remove(stringExtra);
+			}
+		}
+
 		public static T TryGetViewModel<T>(this Intent intent)
 		{
 			return (T)TryGetViewModel(intent);
@@ -36,7 +53,6 @@ namespace UNLTestTask.Droid.Helpers
 
 			var obj = ViewModelDictionary[stringExtra];
 
-			ViewModelDictionary.Remove(stringExtra);
 			return obj;
 		}
 	}

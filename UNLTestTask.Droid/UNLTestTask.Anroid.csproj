@@ -63,9 +63,15 @@
     <Compile Include="Adapters\ContactAdapter.cs" />
     <Compile Include="App.cs" />
     <Compile Include="BaseActivity.cs" />
-    <Compile Include="ContactDetailsPage.cs" />
-    <Compile Include="ContactsPage.cs" />
-    <Compile Include="EditContactPage.cs" />
+    <Compile Include="ContactDetailsActivity.cs" />
+    <Compile Include="ContactsActivity.cs" />
+    <Compile Include="EditContactActivity.cs" />
+    <Compile Include="Helpers\ActivityEventArgs.cs" />
+    <Compile Include="Helpers\ActivityLifecycleListener.cs" />
+    <Compile Include="Helpers\ActivityState.cs" />
+    <Compile Include="Helpers\CurrentActivityHelper.cs" />
+    <Compile Include="Helpers\CurrentActivity.cs" />
+    <Compile Include="Helpers\ICurrentActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,7 +81,6 @@
     <Compile Include="Services\MainThreadService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ToastNotificationService.cs" />
-    <Compile Include="Services\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

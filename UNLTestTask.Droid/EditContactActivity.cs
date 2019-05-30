@@ -3,11 +3,12 @@ using Android.OS;
 using Android.Widget;
 using GalaSoft.MvvmLight.Helpers;
 using UNLTestTask.Core.Presentation.ViewModels;
+using Xamarin.Forms.Internals;
 
 namespace UNLTestTask.Droid
 {
 	[Activity(Label = "EditContact")]
-	public class EditContactPage : BaseActivity<IEditContactViewModel>
+	public class EditContactActivity : BaseActivity<IEditContactViewModel>
 	{
 		private Spinner _phoneTypeSpinner;
 		private Button _submitButton;
@@ -16,7 +17,6 @@ namespace UNLTestTask.Droid
 		private EditText _phoneEditText;
 		private EditText _nameEditText;
 		private ArrayAdapter<string> _phoneTypesAdapter;
-		public string PhoneType { get; set; }
 		
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
@@ -52,17 +52,15 @@ namespace UNLTestTask.Droid
 			this.SetBinding(() => ViewModel.IsValid,
 				() => _submitButton.Enabled, BindingMode.OneWay);
 
-			this.SetBinding(() => ViewModel.PhoneType,
-				() => PhoneType, BindingMode.OneWay);
+			this.SetBinding(() => ViewModel.PhoneType, BindingMode.OneWay)
+				.WhenSourceChanges(() => { _phoneTypeSpinner.SetSelection(ViewModel.PhoneTypes.IndexOf(ViewModel.PhoneType)); });
 
-			_phoneTypeSpinner.ItemSelected += OnPhoneTypeSelected;
-			
+			this.SetBinding(() => _phoneTypeSpinner.SelectedItemPosition, BindingMode.OneWay)
+				.ObserveSourceEvent<AdapterView.ItemSelectedEventArgs>("ItemSelected")
+				.WhenSourceChanges(() =>
+					ViewModel.PhoneType = ViewModel.PhoneTypes[_phoneTypeSpinner.SelectedItemPosition == -1 ? 0 : _phoneTypeSpinner.SelectedItemPosition]);
+
 			_submitButton.SetCommand("Click", ViewModel.SubmitCommand);
-		}
-
-		private void OnPhoneTypeSelected(object sender, AdapterView.ItemSelectedEventArgs e)
-		{
-			PhoneType = ViewModel.PhoneTypes[e.Position];
 		}
 	}
 }

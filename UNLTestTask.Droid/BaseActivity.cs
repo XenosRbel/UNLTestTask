@@ -15,23 +15,17 @@ using UNLTestTask.Droid.Services;
 namespace UNLTestTask.Droid
 {
 	[Activity(Label = "BaseActivity")]
-	public class BaseActivity<TViewModel> : BaseActivity where TViewModel : class
+	public class BaseActivity<TViewModel> :Activity where TViewModel : class
 	{
 		private TViewModel _viewModel;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			Current = this;
 
 			_viewModel = Intent.TryGetViewModel<TViewModel>();
 		}
 
 		protected TViewModel ViewModel => _viewModel;
-	}
-
-	public class BaseActivity : Activity
-	{
-		public static Activity Current { get; internal set; }
 	}
 }

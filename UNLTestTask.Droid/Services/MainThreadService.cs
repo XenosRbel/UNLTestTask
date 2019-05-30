@@ -1,5 +1,6 @@
 ﻿using System;
 using UNLTestTask.Core.Services;
+using UNLTestTask.Droid.Helpers;
 
 namespace UNLTestTask.Droid.Services
 {
@@ -7,7 +8,7 @@ namespace UNLTestTask.Droid.Services
 	{
 		public void BeginInvokeOnMainThread(Action action)
 		{
-			BaseActivity.Current.RunOnUiThread(action.Invoke);
+			CurrentActivityHelper.Current.Activity.RunOnUiThread(action.Invoke);
 		}
 	}
 }

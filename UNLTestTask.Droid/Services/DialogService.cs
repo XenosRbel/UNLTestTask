@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Android.App;
 using UNLTestTask.Core.Services;
+using UNLTestTask.Droid.Helpers;
 
 namespace UNLTestTask.Droid.Services
 {
@@ -19,7 +20,7 @@ namespace UNLTestTask.Droid.Services
 		{
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var builder = new AlertDialog.Builder(BaseActivity.Current);
+				var builder = new AlertDialog.Builder(CurrentActivityHelper.Current.Activity);
 				builder.SetTitle(title)
 					.SetMessage(message)
 					.SetCancelable(true)
@@ -38,7 +39,7 @@ namespace UNLTestTask.Droid.Services
 
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var builder = new AlertDialog.Builder(BaseActivity.Current);
+				var builder = new AlertDialog.Builder(CurrentActivityHelper.Current.Activity);
 				builder.SetTitle(title)
 					.SetMessage(message)
 					.SetPositiveButton(accept, (sender, args) =>

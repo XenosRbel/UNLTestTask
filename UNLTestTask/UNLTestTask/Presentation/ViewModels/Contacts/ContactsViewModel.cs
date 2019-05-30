@@ -34,7 +34,7 @@ namespace UNLTestTask.Forms.Presentation.ViewModels.Contacts
 			_dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
 			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
 
-			LoadCommand = new Command(async () => await OnExecuteLoadCommand());
+			LoadCommand = new Command(async () => await LoadContacts());
 
 			ShowContactDetailsCommand = new Command(OnItemTapped);
 
@@ -97,7 +97,7 @@ namespace UNLTestTask.Forms.Presentation.ViewModels.Contacts
 			await _repository.RemoveAllAsync<Contact>();
 			await _repository.AddAllAsync(contacts);
 
-			OnExecuteLoadCommand();
+			LoadContacts();
 
 			_toastNotificationService.LongAlert("Contact successfully removed!");
 		}
@@ -109,7 +109,7 @@ namespace UNLTestTask.Forms.Presentation.ViewModels.Contacts
 			_navigationService.PushEditContactAsync(objContact);
 		}
 
-		private async Task OnExecuteLoadCommand()
+		public async Task LoadContacts()
 		{
 			IsBusy = true;
 

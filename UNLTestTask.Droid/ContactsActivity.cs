@@ -1,67 +1,76 @@
 ﻿using System;
-using System.Linq;
 using Android.App;
 using Android.OS;
 using Android.Support.V4.Widget;
-using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using GalaSoft.MvvmLight.Helpers;
-using GalaSoft.MvvmLight.Threading;
-using GalaSoft.MvvmLight.Views;
+using UNLTestTask.Core.Models;
 using UNLTestTask.Core.Presentation.ViewModels;
-using UNLTestTask.Droid.Adapters;
-using UNLTestTask.Droid.Services;
 
 namespace UNLTestTask.Droid
 {
 	[Activity(Label = "ContactsPage")]
-	public class ContactsPage : BaseActivity<IContactsViewModel>	
+	public class ContactsActivity : BaseActivity<IContactsViewModel>	
 	{
 		private Button _addContactButton;
 		private ListView _contactsListView;
-		private ContactAdapter _contactAdapter;
 		private SwipeRefreshLayout _refreshLayout;
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
-			DispatcherHelper.Initialize();
+
 			SetContentView(Resource.Layout.contacts_page);
-			_contactAdapter = new ContactAdapter(this);
-			this.SetBinding(() => ViewModel.ContactViewModelsItems,
-				() => _contactAdapter.Contacts, BindingMode.OneWay);
 
 			_contactsListView = FindViewById<ListView>(Resource.Id.contacts_list);
-			_contactsListView.Adapter = _contactAdapter;
+			_contactsListView.Adapter = ViewModel.ContactViewModelsItems.GetAdapter(GetTemplateDelegate);
 			_contactsListView.ItemClick += OnContactClicked;
-			RegisterForContextMenu(_contactsListView);
-
+			
 			_addContactButton = FindViewById<Button>(Resource.Id.add_contact);
 			_addContactButton.SetCommand("Click", ViewModel.AddContactCommand);
-			this.SetBinding(() => ViewModel.IsCommandActive, 
-				() => _addContactButton.Enabled, BindingMode.OneWay);
 
 			_refreshLayout = FindViewById<SwipeRefreshLayout>(Resource.Id.swiperefresh);
-			_refreshLayout.Refresh += delegate(object sender, EventArgs args) {  RefreshContactsViews();};
-			_refreshLayout.SetCommand("Refresh", ViewModel.LoadCommand);
+
+			RegisterForContextMenu(_contactsListView);
+
+			this.SetBinding(() => ViewModel.IsCommandActive,
+				() => _addContactButton.Enabled, BindingMode.OneWay);
+
 			this.SetBinding(() => ViewModel.IsBusy,
 				() => _refreshLayout.Refreshing, BindingMode.OneWay);
+
+			this.SetBinding(() => _refreshLayout.Refreshing)
+				.ObserveSourceEvent("Refresh")
+				.WhenSourceChanges(async () =>
+				{
+					await ViewModel.LoadContacts();
+
+					_contactsListView.InvalidateViews();
+					_contactsListView.RefreshDrawableState();
+				});
 		}
 
-		protected override void OnResume()
+		private View GetTemplateDelegate(int arg1, IContactViewModel arg2, View arg3)
 		{
-			base.OnResume();
-			ViewModel.LoadCommand.Execute(null);
+			if (arg2.Contact.PhoneType == ContactType.None)
+			{
+				arg3 = LayoutInflater.Inflate(Resource.Layout.item_contact, null);
+			}
+			else
+			{
+				arg3 = LayoutInflater.Inflate(Resource.Layout.item_contact_work, null);
+			}
+			
+			var name = arg3.FindViewById<TextView>(Resource.Id.contact_name);
+			name.Text = arg2.Contact.Name;
 
-			RefreshContactsViews();
-		}
+			var phone = arg3.FindViewById<TextView>(Resource.Id.contact_phone);
+			phone.Text = arg2.Contact.PhoneNumber;
 
-		private void RefreshContactsViews()
-		{
-			_contactAdapter.NotifyDataSetChanged();
-			_contactsListView.InvalidateViews();
-			_contactsListView.RefreshDrawableState();
+			var image = arg3.FindViewById<ImageView>(Resource.Id.contact_image);
+
+			return arg3;
 		}
 
 		public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)

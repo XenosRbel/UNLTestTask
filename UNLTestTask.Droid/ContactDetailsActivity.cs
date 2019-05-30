@@ -8,7 +8,7 @@ using UNLTestTask.Core.Presentation.ViewModels;
 namespace UNLTestTask.Droid
 {
 	[Activity(Label = "ContactDetailsPage")]
-	public class ContactDetailsPage : BaseActivity<IContactDetailsViewModel>
+	public class ContactDetailsActivity : BaseActivity<IContactDetailsViewModel>
 	{
 		private TextView _nameTextView;
 		private TextView _phoneTextView;
