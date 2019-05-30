@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Core.Services
 {
 	public interface IDialogService
 	{

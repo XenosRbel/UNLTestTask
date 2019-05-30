@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Presentation.Views
+namespace UNLTestTask.Forms.Presentation.Views
 {
 	public abstract class ContentPageBase<TViewModel> : ContentPage where TViewModel : class
 	{

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ListView
+        android:id="@+id/contacts_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/add_contact"/>        
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:text="Add contact"
+        android:layout_alignParentBottom="true"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:id="@+id/add_contact" />
+</RelativeLayout >

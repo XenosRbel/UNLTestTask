@@ -1,24 +1,19 @@
-﻿using UNLTestTask.Services;
+﻿using UNLTestTask.Core.Services;
+using UNLTestTask.Forms.Services;
 using Xamarin.Forms;
 
-namespace UNLTestTask
+namespace UNLTestTask.Forms
 {
 	public partial class App : Application
     {
-	    private readonly IContainer _container;
-	    private readonly INavigationService _navigationService;
-
-	    //private static ViewModelLocator Locator { get; private set; }
-
-		public App()
+	    public App()
         {
-            InitializeComponent();
+	        InitializeComponent();
 
-			_container = new Container(this);
-			_navigationService = _container.GetNavigationService();
-			_navigationService.PushContactsPageAsync();
+			IServiceContainer container = new Container(this);
 
-			//Locator = new ViewModelLocator(_container);
+			INavigationService navigationService = new NavigationService(this, container);
+			navigationService.PushContactsPageAsync();
 		}
     }
 }

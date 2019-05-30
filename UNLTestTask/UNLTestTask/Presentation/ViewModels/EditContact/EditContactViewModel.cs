@@ -8,18 +8,15 @@ using UNLTestTask.Core.Presentation.ViewModels;
 using UNLTestTask.Core.Services;
 using UNLTestTask.Core.Validations;
 using UNLTestTask.Core.Validations.Rules;
-using UNLTestTask.Services;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Presentation.ViewModels.EditContact
+namespace UNLTestTask.Forms.Presentation.ViewModels.EditContact
 {
 	public class EditContactViewModel : BaseViewModel, IEditContactViewModel
 	{
 		private readonly IRepository _repository;
 		private readonly INavigationService _navigationService;
 		private readonly IToastNotificationService _toastNotificationService;
-		private readonly IMainThreadService _mainThreadService;
-		private readonly ICommandService _commandService;
 		private readonly ValidableObject<Contact> _validableContact;
 		private readonly int _contactId;
 		private string _nameErrorMessage;
@@ -30,16 +27,14 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 		private string[] _phoneTypes;
 		private bool _isValid;
 
-		public EditContactViewModel(IRepository repository, 
-			INavigationService navigationService, 
+		public EditContactViewModel(IRepository repository,
+			INavigationService navigationService,
 			IToastNotificationService toastNotificationService,
-			IMainThreadService mainThreadService,
 			Contact contact = null)
 		{
 			_repository = repository ?? throw new ArgumentNullException(nameof(repository));
 			_navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 			_toastNotificationService = toastNotificationService ?? throw new ArgumentNullException(nameof(toastNotificationService));
-			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
 
 			var rules = BuildValidationRules();
 			_validableContact = new ValidableObject<Contact>(rules);
@@ -82,7 +77,7 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 			{
 				SetProperty(ref _phoneType, value);
 				Validate();
-			} 
+			}
 		}
 
 		public string[] PhoneTypes
@@ -96,7 +91,7 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 			get => _isValid;
 			set => SetProperty(ref _isValid, value);
 		}
-		
+
 		public string PhoneErrorMessage
 		{
 			get => _phoneErrorMessage;
@@ -139,7 +134,7 @@ namespace UNLTestTask.Presentation.ViewModels.EditContact
 
 			await _repository.AddAllAsync(contacts);
 
-			_mainThreadService.BeginInvokeOnMainThread((() => _toastNotificationService.LongAlert($"Contact successfully updated!")));
+			_toastNotificationService.LongAlert($"Contact successfully updated!");
 
 			await _navigationService.PopAsync();
 		}

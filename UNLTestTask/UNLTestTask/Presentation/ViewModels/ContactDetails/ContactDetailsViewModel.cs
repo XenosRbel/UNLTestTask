@@ -6,23 +6,19 @@ using UNLTestTask.Core.DataCore;
 using UNLTestTask.Core.Helpers;
 using UNLTestTask.Core.Models;
 using UNLTestTask.Core.Presentation.ViewModels;
-using UNLTestTask.Services;
+using UNLTestTask.Core.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Presentation.ViewModels.ContactDetails
+namespace UNLTestTask.Forms.Presentation.ViewModels.ContactDetails
 {
 	public class ContactDetailsViewModel : IContactDetailsViewModel
 	{
-		private readonly IMainThreadService _mainThreadService;
 
 		public ContactDetailsViewModel(
-			IMainThreadService mainThreadService,
 			Contact contact)
 		{
-			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
-
-			Contact = new ObservableObject<Contact> { Property = contact ?? throw new ArgumentNullException(nameof(contact))};
+			Contact = new ObservableObject<Contact> { Property = contact ?? throw new ArgumentNullException(nameof(contact)) };
 
 			Contact.Property.PhotoPath = Contact.Property.PhoneType == ContactType.None ? "tom.png" : "jerry.png";
 
@@ -31,11 +27,13 @@ namespace UNLTestTask.Presentation.ViewModels.ContactDetails
 
 		public ObservableObject<Contact> Contact { get; set; }
 		public ICommand CallCommand { get; set; }
-		
+
 		private void OnCall()
 		{
 			var phoneNumber = Contact.Property.PhoneNumber;
-			_mainThreadService.BeginInvokeOnMainThread(() => Call(phoneNumber));
+
+			//Need to run in main thead
+			Call(phoneNumber);
 		}
 
 		private static void Call(string phoneNumber)

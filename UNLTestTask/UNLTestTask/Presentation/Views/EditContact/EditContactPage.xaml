@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <views:ContentPageBase xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:UNLTestTask.Presentation.Views;assembly=UNLTestTask"
+             xmlns:views="clr-namespace:UNLTestTask.Forms.Presentation.Views;assembly=UNLTestTask.Forms"
              xmlns:abstract="clr-namespace:UNLTestTask.Core.Presentation.ViewModels;assembly=UNLTestTask.Core"
              x:TypeArguments="abstract:IEditContactViewModel"
-             x:Class="UNLTestTask.Presentation.Views.EditContact.EditContactPage">
+             x:Class="UNLTestTask.Forms.Presentation.Views.EditContact.EditContactPage">
     <ContentPage.Content>
         <StackLayout Margin="5">
             <StackLayout Style="{StaticResource Style.Default.EditedGroup}">

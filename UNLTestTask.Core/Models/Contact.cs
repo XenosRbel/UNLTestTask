@@ -4,6 +4,7 @@ using System.Text;
 
 namespace UNLTestTask.Core.Models
 {
+	[Serializable]
 	public class Contact : IBaseEntity
 	{
 		public string PhotoPath { get; set; }

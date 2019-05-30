@@ -2,7 +2,7 @@
 using UNLTestTask.Presentation.ViewModels.Contacts;
 using Xamarin.Forms;
 
-namespace UNLTestTask.ControlsBehavior
+namespace UNLTestTask.Forms.ControlsBehavior
 {
 	internal class ContactDataSelector : DataTemplateSelector
 	{

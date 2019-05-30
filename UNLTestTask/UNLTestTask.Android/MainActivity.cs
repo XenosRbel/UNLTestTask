@@ -5,15 +5,14 @@ using Android.OS;
 using Android.Widget;
 using GalaSoft.MvvmLight.Helpers;
 using UNLTestTask.Core.Presentation.ViewModels;
+using UNLTestTask.Forms;
 
 namespace UNLTestTask.Droid
 {
 	[Activity(Label = "UNLTestTask", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-		//private Button _addContactButton;
-
-		protected override void OnCreate(Bundle savedInstanceState)
+	    protected override void OnCreate(Bundle savedInstanceState)
 		{
 			TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -25,14 +24,7 @@ namespace UNLTestTask.Droid
             LoadApplication(new App());
 
             Current = this;
-
-            //SetContentView(Resource.Layout.ContactsPage);
-			//AddContactButton.SetCommand(ContactsViewModel.ContactCommand, _addContactButton);
 		}
-
-		//public Button AddContactButton => _addContactButton ?? (_addContactButton = FindViewById<Button>(Resource.Id.AddContactCommand));
-
-		//public IContactsViewModel ContactsViewModel => App.Locator.ContactsViewModel;
 
 		public static Activity Current { get; private set; }
 

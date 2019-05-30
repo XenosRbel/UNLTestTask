@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UNLTestTask.Core.Models;
-using UNLTestTask.Presentation.ViewModels.ContactDetails;
-using UNLTestTask.Presentation.ViewModels.Contacts;
-using UNLTestTask.Presentation.ViewModels.EditContact;
-using UNLTestTask.Presentation.Views.ContactDetails;
-using UNLTestTask.Presentation.Views.Contacts;
-using UNLTestTask.Presentation.Views.EditContact;
+using UNLTestTask.Core.Services;
+using UNLTestTask.Forms.Presentation.ViewModels.ContactDetails;
+using UNLTestTask.Forms.Presentation.ViewModels.Contacts;
+using UNLTestTask.Forms.Presentation.ViewModels.EditContact;
+using UNLTestTask.Forms.Presentation.Views.ContactDetails;
+using UNLTestTask.Forms.Presentation.Views.Contacts;
+using UNLTestTask.Forms.Presentation.Views.EditContact;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Forms.Services
 {
 	internal class NavigationService : INavigationService
 	{
 		private readonly Application _application;
-		private readonly IContainer _container;
+		private readonly IServiceContainer _container;
+		private readonly IMainThreadService _mainThreadService;
 		private INavigation Navigation => _application.MainPage.Navigation;
 
-		public NavigationService(Application application, IContainer container)
+		public NavigationService(Application application, IServiceContainer container)
 		{
 			_application = application ?? throw new ArgumentNullException(nameof(application));
 			_container = container ?? throw new ArgumentNullException(nameof(container));
+			_mainThreadService = _container.GetMainThreadService();
 		}
 
 		public Task PopAsync()
@@ -30,49 +33,64 @@ namespace UNLTestTask.Services
 
 		public Task PushContactDetailsPageAsync(Contact contact)
 		{
-			var viewModel = new ContactDetailsViewModel(
-				_container.GetMainThreadService(),
-				contact);
-			var page = new ContactDetailsViewPage(viewModel);
-			
-			return Navigation.PushModalAsync(page);
+			_mainThreadService.BeginInvokeOnMainThread(() =>
+			{
+				var viewModel = new ContactDetailsViewModel(contact);
+
+				var page = new ContactDetailsViewPage(viewModel);
+
+				Navigation.PushModalAsync(page);
+			});
+
+			return Task.FromResult(true);
 		}
 
 		public Task PushContactsPageAsync()
 		{
-			var viewModel = new ContactsViewModel(_container.GetRepository(), 
-				_container.GetNavigationService(),
-				_container.GetDialogService(),
-				_container.GetToastNotificationService(),
-				_container.GetMainThreadService());
-			var page = new ContactsViewPage(viewModel);
+			_mainThreadService.BeginInvokeOnMainThread(() =>
+			{
+				var viewModel = new ContactsViewModel(_container.GetRepository(),
+					this,
+					_container.GetDialogService(),
+					_container.GetToastNotificationService());
 
-			CreateNewNavigation(page);
-			
+				var page = new ContactsViewPage(viewModel);
+
+				CreateNewNavigation(page);
+			});
+
 			return Task.FromResult(true);
 		}
 
 		public Task PushEditContactAsync()
 		{
-			var viewModel = new EditContactViewModel(_container.GetRepository(), 
-				_container.GetNavigationService(),
-				_container.GetToastNotificationService(),
-				_container.GetMainThreadService());
-			var page = new EditContactPage(viewModel);
+			_mainThreadService.BeginInvokeOnMainThread(() =>
+			{
+				var viewModel = new EditContactViewModel(_container.GetRepository(),
+					this,
+					_container.GetToastNotificationService());
+				var page = new EditContactPage(viewModel);
 
-			return Navigation.PushModalAsync(page);
+				Navigation.PushModalAsync(page);
+			});
+
+			return Task.FromResult(true);
 		}
 
 		public Task PushEditContactAsync(Contact contact)
 		{
-			var viewModel = new EditContactViewModel(_container.GetRepository(), 
-				_container.GetNavigationService(), 
-				_container.GetToastNotificationService(),
-				_container.GetMainThreadService(),
-				contact);
-			var page = new EditContactPage(viewModel);
+			_mainThreadService.BeginInvokeOnMainThread(() =>
+			{
+				var viewModel = new EditContactViewModel(_container.GetRepository(),
+					this,
+					_container.GetToastNotificationService(),
+					contact);
+				var page = new EditContactPage(viewModel);
 
-			return Navigation.PushModalAsync(page);
+				Navigation.PushModalAsync(page);
+			});
+
+			return Task.FromResult(true);
 		}
 
 		private void CreateNewNavigation(Page page)

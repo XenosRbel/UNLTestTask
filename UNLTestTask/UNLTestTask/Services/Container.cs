@@ -2,9 +2,9 @@
 using UNLTestTask.Core.Services;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Forms.Services
 {
-	internal class Container : IContainer
+	internal class Container : IServiceContainer
 	{
 		private readonly Application _application;
 		private readonly IRepository _repository;
@@ -50,11 +50,6 @@ namespace UNLTestTask.Services
 		public IMainThreadService GetMainThreadService()
 		{
 			return _mainThreadService;
-		}
-
-		public ICommandService GetCommandService()
-		{
-			throw new System.NotImplementedException();
 		}
 	}
 }

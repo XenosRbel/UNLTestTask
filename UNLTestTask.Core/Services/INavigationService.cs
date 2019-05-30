@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using UNLTestTask.Core.Models;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Core.Services
 {
 	public interface INavigationService
 	{

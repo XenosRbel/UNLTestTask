@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using UNLTestTask.Core.Services;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Forms.Services
 {
 	internal class DialogService : IDialogService
 	{
@@ -16,7 +17,7 @@ namespace UNLTestTask.Services
 		}
 		public Task DisplayAlertAsync(string title, string message, string cancel)
 		{
-			return Task.Run(() => Device.BeginInvokeOnMainThread(() => _application.MainPage.DisplayAlert(title, message, cancel)));
+			return Task.Run(() => _mainThreadService.BeginInvokeOnMainThread(() => _application.MainPage.DisplayAlert(title, message, cancel)));
 		}
 
 		public Task<bool> DisplayAlertAsync(string title, string message, string accept, string cancel)

@@ -1,7 +1,7 @@
 ﻿using UNLTestTask.Core.Presentation.ViewModels;
 using Xamarin.Forms.Xaml;
 
-namespace UNLTestTask.Presentation.Views.ContactDetails
+namespace UNLTestTask.Forms.Presentation.Views.ContactDetails
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ContactDetailsViewPage

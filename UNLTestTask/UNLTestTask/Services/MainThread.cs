@@ -1,7 +1,8 @@
 ﻿using System;
+using UNLTestTask.Core.Services;
 using Xamarin.Forms;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Forms.Services
 {
 	internal class MainThreadService : IMainThreadService
 	{

@@ -1,15 +1,12 @@
 ﻿using UNLTestTask.Core.DataCore;
-using UNLTestTask.Core.Services;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Core.Services
 {
-	public interface IContainer
+	public interface IServiceContainer
 	{
 		IRepository GetRepository();
-		INavigationService GetNavigationService();
 		IDialogService GetDialogService();
 		IToastNotificationService GetToastNotificationService();
 		IMainThreadService GetMainThreadService();
-		ICommandService GetCommandService();
 	}
 }

@@ -138,9 +138,9 @@
       <Project>{30116881-34D5-4B40-B2CF-E467CADCA05C}</Project>
       <Name>UNLTestTask.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UNLTestTask\UNLTestTask.csproj">
-      <Project>{8C0DC2DA-6834-4551-BB73-81EB6C0B95FE}</Project>
-      <Name>UNLTestTask</Name>
+    <ProjectReference Include="..\UNLTestTask\UNLTestTask.Forms.csproj">
+      <Project>{C993A709-76B7-49D0-AA66-E060190896B6}</Project>
+      <Name>UNLTestTask.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

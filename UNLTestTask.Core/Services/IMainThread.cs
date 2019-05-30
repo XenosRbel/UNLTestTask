@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UNLTestTask.Services
+namespace UNLTestTask.Core.Services
 {
 	public interface IMainThreadService
 	{

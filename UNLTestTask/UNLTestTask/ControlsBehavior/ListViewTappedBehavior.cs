@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace UNLTestTask.ControlsBehavior
+namespace UNLTestTask.Forms.ControlsBehavior
 {
 	internal class ListViewTappedBehavior : BindableObject
 	{
@@ -30,7 +30,7 @@ namespace UNLTestTask.ControlsBehavior
 
 			entry.ItemTapped += (sender, e) =>
 			{
-				var command = (newValue as ICommand);
+				var command = newValue as ICommand;
 				if (command == null)
 					return;
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace UNLTestTask.Core.Helpers
 {
@@ -16,7 +18,7 @@ namespace UNLTestTask.Core.Helpers
 		{
 		}
 
-		public void AddRange(IEnumerable<T> collection)
+		public void AddRange(IEnumerable<T> collection, [CallerMemberName] string propertyName = "")
 		{
 			if (collection == null)
 				throw new ArgumentNullException(nameof(collection));
@@ -28,8 +30,10 @@ namespace UNLTestTask.Core.Helpers
 			foreach (var i in changedItems)
 				Items.Add(i);
 
+			OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
 			OnPropertyChanged(new PropertyChangedEventArgs("Count"));
 			OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, changedItems, startIndex));
 		}
 	}

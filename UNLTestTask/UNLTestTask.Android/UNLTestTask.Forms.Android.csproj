@@ -8,7 +8,7 @@
     <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>UNLTestTask.Droid</RootNamespace>
-    <AssemblyName>UNLTestTask.Android</AssemblyName>
+    <AssemblyName>UNLTestTask..Forms.Android</AssemblyName>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -31,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -102,27 +103,22 @@
       <Project>{30116881-34D5-4B40-B2CF-E467CADCA05C}</Project>
       <Name>UNLTestTask.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UNLTestTask\UNLTestTask.csproj">
-      <Project>{8C0DC2DA-6834-4551-BB73-81EB6C0B95FE}</Project>
-      <Name>UNLTestTask</Name>
+    <ProjectReference Include="..\UNLTestTask\UNLTestTask.Forms.csproj">
+      <Project>{C993A709-76B7-49D0-AA66-E060190896B6}</Project>
+      <Name>UNLTestTask.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\jerry.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\tom.png" />
+    <AndroidResource Include="Resources\drawable\person_outline.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\phone_black.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\person_outline.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\ContactsPage.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\tom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

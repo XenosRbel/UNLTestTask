@@ -1,7 +1,7 @@
 ﻿using UNLTestTask.Core.Presentation.ViewModels;
 using Xamarin.Forms.Xaml;
 
-namespace UNLTestTask.Presentation.Views.EditContact
+namespace UNLTestTask.Forms.Presentation.Views.EditContact
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class EditContactPage
