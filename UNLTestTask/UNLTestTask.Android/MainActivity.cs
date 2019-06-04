@@ -2,9 +2,6 @@
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
-using Android.Widget;
-using GalaSoft.MvvmLight.Helpers;
-using UNLTestTask.Core.Presentation.ViewModels;
 using UNLTestTask.Forms;
 
 namespace UNLTestTask.Droid

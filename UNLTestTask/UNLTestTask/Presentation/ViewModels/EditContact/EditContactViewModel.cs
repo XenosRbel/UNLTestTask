@@ -41,11 +41,14 @@ namespace UNLTestTask.Forms.Presentation.ViewModels.EditContact
 
 			SubmitCommand = new Command(OnSubmit, () => IsValid);
 
-			_name = contact?.Name;
-			_phoneNumber = contact?.PhoneNumber;
-			_phoneType = contact?.PhoneType.ToString();
+			_name = contact?.Name ?? string.Empty;
+			_phoneNumber = contact?.PhoneNumber ?? string.Empty;
+			_phoneType = contact?.PhoneType.ToString() ?? string.Empty;
 			PhoneTypes = Enum.GetNames(typeof(ContactType));
 			_contactId = contact?.Id ?? -1;
+
+			_nameErrorMessage = string.Empty;
+			_phoneErrorMessage = string.Empty;
 		}
 
 		public ICommand SubmitCommand { get; set; }
