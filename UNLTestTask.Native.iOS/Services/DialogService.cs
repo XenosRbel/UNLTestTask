@@ -1,44 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Foundation;
+using Android.Runtime;
+using Java.Interop;
 using UIKit;
 using UNLTestTask.Core.Services;
+using WebKit;
 
 namespace UNLTestTask.Native.iOS.Services
 {
 	internal class DialogService : IDialogService
 	{
 		private readonly IMainThreadService _mainThreadService;
-		private readonly UIWindow _window;
 
-		public DialogService(IMainThreadService mainThreadService, UIWindow window)
+		public DialogService(IMainThreadService mainThreadService)
 		{
 			_mainThreadService = mainThreadService ?? throw new ArgumentNullException(nameof(mainThreadService));
-			_window = window ?? throw new ArgumentNullException(nameof(window));
 		}
 
 		public Task DisplayAlertAsync(string title, string message, string cancel)
 		{
+			var completionSource = new TaskCompletionSource<bool>();
+			var dialogResult = false;
+
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
-				var b = new UIAlertViewDelegate();
-				b.Clicked(new UIAlertView(title,message,null, cancel), 0);
+				var alertViewDelegate = new AlertDelegate();
+				alertViewDelegate.ButtonClicked += delegate (UIAlertView sender, int index)
+				{
+					dialogResult = index == 0;
+
+					completionSource.SetResult(dialogResult);
+				};
+
+				UIAlertView alert = new UIAlertView(title, message, (IUIAlertViewDelegate)alertViewDelegate, cancel);
+
+				alert.Delegate = alertViewDelegate;
+				
+				alert.Show();
 			});
 
-			return Task.FromResult(true);
+			return completionSource.Task;
 		}
 
 		public Task<bool> DisplayAlertAsync(string title, string message, string accept, string cancel)
 		{
+			var completionSource = new TaskCompletionSource<bool>();
+			var dialogResult = false;
+
 			_mainThreadService.BeginInvokeOnMainThread(() =>
 			{
+				var alertViewDelegate = new AlertDelegate();
+				alertViewDelegate.ButtonClicked += delegate(UIAlertView sender, int index)
+				{
+					dialogResult = index == 0;
 
+					completionSource.SetResult(dialogResult);
+				};
+
+				UIAlertView alert = new UIAlertView(title, message, (IUIAlertViewDelegate)alertViewDelegate, accept, cancel);
+
+				alert.Delegate = alertViewDelegate;
+
+				alert.Show();
 			});
 
-			return Task.FromResult(true);
+			return completionSource.Task;
+		}
+	}
+
+	public sealed class AlertDelegate : UIAlertViewDelegate
+	{
+		public delegate void ClickedEventHandler(UIAlertView sender, int index);
+		public event ClickedEventHandler ButtonClicked;
+
+		public override void Clicked(UIAlertView alertView, nint buttonIndex)
+		{
+			OnButtonClicked(alertView, (int)buttonIndex);
+		}
+
+		private void OnButtonClicked(UIAlertView sender, int index)
+		{
+			ButtonClicked?.Invoke(sender, index);
 		}
 	}
 }

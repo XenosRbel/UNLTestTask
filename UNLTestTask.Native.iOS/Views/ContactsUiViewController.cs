@@ -13,7 +13,7 @@ namespace UNLTestTask.Native.iOS.Views
 		private UIButton _addContactUiButton;
 		private UITableView _contactsList;
 
-		public async override void ViewDidLoad()
+		public override async void ViewDidLoad()
 		{
 			base.ViewDidLoad();
 

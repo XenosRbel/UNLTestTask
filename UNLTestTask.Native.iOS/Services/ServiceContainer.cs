@@ -16,15 +16,12 @@ namespace UNLTestTask.Native.iOS.Services
 		private readonly IDialogService _dialogService;
 		private readonly IToastNotificationService _toastNotificationService;
 		private readonly IMainThreadService _mainThreadService;
-		private readonly UIWindow _window;
 
 		public ServiceContainer(UIWindow window)
 		{
-			_window = window ?? throw new ArgumentNullException(nameof(window));
-
 			_repository = new MemoryRepository();
-			_mainThreadService = new MainThreadService(_window);
-			_dialogService = new DialogService(_mainThreadService, _window);
+			_mainThreadService = new MainThreadService(window);
+			_dialogService = new DialogService(_mainThreadService);
 			_toastNotificationService = new ToastNotificationService(_mainThreadService);
 		}
 
