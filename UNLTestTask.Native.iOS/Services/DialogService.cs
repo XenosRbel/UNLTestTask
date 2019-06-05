@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Android.Runtime;
-using Java.Interop;
 using UIKit;
 using UNLTestTask.Core.Services;
-using WebKit;
 
 namespace UNLTestTask.Native.iOS.Services
 {

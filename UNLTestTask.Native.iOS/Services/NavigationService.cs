@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Foundation;
 using UIKit;
 using UNLTestTask.Core.Models;
-using UNLTestTask.Core.Presentation.ViewModels;
 using UNLTestTask.Core.Services;
 using UNLTestTask.Forms.Presentation.ViewModels.ContactDetails;
 using UNLTestTask.Forms.Presentation.ViewModels.Contacts;

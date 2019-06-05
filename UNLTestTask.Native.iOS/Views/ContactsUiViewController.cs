@@ -1,14 +1,15 @@
-﻿using UIKit;
+﻿using System.Collections.Generic;
+using UIKit;
 using Foundation;
 using Cirrious.FluentLayouts.Touch;
 using GalaSoft.MvvmLight.Helpers;
-using UNLTestTask.Core.Models;
 using UNLTestTask.Core.Presentation.ViewModels;
+using UNLTestTask.Native.iOS.Views.Adapters;
 
 namespace UNLTestTask.Native.iOS.Views
 {
 	[Register("ContactsUIViewController")]
-	public class ContactsUiViewController : BaseUiViewController<IContactsViewModel>
+	public class ContactsUiViewController : BaseUiViewController<IContactsViewModel>, IUITableViewDelegate
 	{
 		private UIButton _addContactUiButton;
 		private UITableView _contactsList;
@@ -25,7 +26,8 @@ namespace UNLTestTask.Native.iOS.Views
 			_addContactUiButton.SetTitle("Add contact", UIControlState.Normal);
 
 			_contactsList = new UITableView(View.Bounds);
-			_contactsList.Source = new TableSource(ViewModel.ContactViewModelsItems);
+			_contactsList.Source = new ContactCellSource(ViewModel.ContactViewModelsItems);
+			_contactsList.Delegate = this;
 
 			View.AddSubviews(_addContactUiButton, _contactsList);
 
@@ -44,17 +46,36 @@ namespace UNLTestTask.Native.iOS.Views
 			View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
 			_addContactUiButton.SetCommand("TouchUpInside", ViewModel.AddContactCommand);
-
-			//_contactsList.Source = ViewModel.ContactViewModelsItems.GetTableViewSource(CreateCellDelegate);
 		}
 
-		private void CreateCellDelegate(UITableViewCell tableView, IContactViewModel viewModel, NSIndexPath indexPath)
+		[Export("tableView:didSelectRowAtIndexPath:")]
+		private void RowSelected(UITableView tableView, NSIndexPath indexPath)
 		{
-			var castedCell = (ContactUiTableViewCell)tableView;
-			castedCell.Name.Text = viewModel.Contact.Name;
-			castedCell.Phone.Text = viewModel.Contact.PhoneNumber;
+			ViewModel.ShowContactDetailsCommand.Execute(ViewModel.ContactViewModelsItems[indexPath.Row]);
+		}
 
-			castedCell.Photo.Image = UIImage.FromBundle(viewModel.Contact.PhoneType == ContactType.None ? "tom.png" : "jerry.png");
+		[Export("tableView:editActionsForRowAtIndexPath:")]
+		public UITableViewRowAction[] EditActionsForRow(UITableView tableView, NSIndexPath indexPath)
+		{
+			var rowActions = new List<UITableViewRowAction>();
+
+			rowActions.Add(UITableViewRowAction.Create(UITableViewRowActionStyle.Normal,
+				"Edit",
+				(action, path) =>
+				{
+					var selectedItemRow = ViewModel.ContactViewModelsItems[indexPath.Row];
+					selectedItemRow.EditContactCommand.Execute(selectedItemRow);
+				}));
+
+			rowActions.Add(UITableViewRowAction.Create(UITableViewRowActionStyle.Destructive,
+				"Remove",
+				(action, path) =>
+				{
+					var selectedItemRow = ViewModel.ContactViewModelsItems[indexPath.Row];
+					selectedItemRow.RemoveContactCommand.Execute(selectedItemRow);
+				}));
+
+			return rowActions.ToArray();
 		}
 
 		protected internal ContactsUiViewController(IContactsViewModel viewModel) : base(viewModel)

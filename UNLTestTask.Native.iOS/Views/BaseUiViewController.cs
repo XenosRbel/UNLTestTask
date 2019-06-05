@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Foundation;
-using GalaSoft.MvvmLight.Helpers;
 using UIKit;
 
 namespace UNLTestTask.Native.iOS.Views

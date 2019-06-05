@@ -25,7 +25,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <MtouchI18n>cjk, mideast, other, rare, west</MtouchI18n>
+    <MtouchI18n>
+    </MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -161,12 +162,9 @@
     <Compile Include="Views\Adapters\ContactUiTableViewCell.cs" />
     <Compile Include="Views\EditContactUiViewController.cs" />
     <Compile Include="Views\Adapters\PhoneTypesPickerModel.cs" />
-    <Compile Include="Views\Adapters\TableSource.cs" />
-    <Compile Include="Views\Adapters\TableViewSourceEx.cs" />
+    <Compile Include="Views\Adapters\ContactCellSource.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Adapters\ContactsList\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BundleResource Include="Resources\jerry.png" />
   </ItemGroup>

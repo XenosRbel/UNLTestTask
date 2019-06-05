@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cirrious.FluentLayouts.Touch;
-using Foundation;
+﻿using Cirrious.FluentLayouts.Touch;
 using UIKit;
 
 namespace UNLTestTask.Native.iOS.Views
 {
 	internal sealed class ContactUiTableViewCell : UITableViewCell
 	{
-		private UILabel _nameLabel;
-		private UILabel _phoneLabel;
-		private UIImageView _photoView;
-
 		public ContactUiTableViewCell()
 		{
 			BackgroundView = new UIView
@@ -28,47 +19,35 @@ namespace UNLTestTask.Native.iOS.Views
 
 			ContentView.BackgroundColor = UIColor.White;
 
-			_nameLabel = new UILabel();
-			_phoneLabel = new UILabel();
+			Name = new UILabel();
+			Phone = new UILabel();
 
-			_photoView = new UIImageView();
+			Photo = new UIImageView();
 
-			ContentView.AddSubviews(_photoView, _nameLabel, _phoneLabel);
+			ContentView.AddSubviews(Photo, Name, Phone);
 
 			const int imageSize = 25;
 			ContentView.AddConstraints(
-				_photoView.AtTopOf(ContentView),
-				_photoView.AtLeadingOf(ContentView),
-				_photoView.Width().EqualTo(imageSize),
-				_photoView.Height().EqualTo(imageSize),
+				Photo.AtTopOf(ContentView),
+				Photo.AtLeadingOf(ContentView),
+				Photo.Width().EqualTo(imageSize),
+				Photo.Height().EqualTo(imageSize),
 
-				_nameLabel.AtTopOf(ContentView),
-				_nameLabel.ToTrailingOf(_photoView),
-				_nameLabel.AtTrailingOf(ContentView),
+				Name.AtTopOf(ContentView),
+				Name.ToTrailingOf(Photo),
+				Name.AtTrailingOf(ContentView),
 
-				_phoneLabel.Below(_nameLabel),
-				_phoneLabel.ToTrailingOf(_photoView),
-				_phoneLabel.AtTrailingOf(ContentView));
+				Phone.Below(Name),
+				Phone.ToTrailingOf(Photo),
+				Phone.AtTrailingOf(ContentView));
 
 			ContentView.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 		}
 
-		public UILabel Name
-		{
-			get => _nameLabel;
-			set => _nameLabel = value;
-		}
+		public UILabel Name { get; }
 
-		public UILabel Phone
-		{
-			get => _phoneLabel;
-			set => _phoneLabel = value;
-		}
+		public UILabel Phone { get; }
 
-		public UIImageView Photo
-		{
-			get => _photoView;
-			set => _photoView = value;
-		}
+		public UIImageView Photo { get; }
 	}
 }

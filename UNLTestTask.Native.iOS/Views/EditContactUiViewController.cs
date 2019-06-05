@@ -8,11 +8,10 @@ using Xamarin.Forms.Internals;
 namespace UNLTestTask.Native.iOS.Views
 {
 	[Register("EditContactUIViewController")]
-	public class EditContactUiViewController : BaseUiViewController<IEditContactViewModel>
+	public class EditContactUiViewController : BaseUiViewController<IEditContactViewModel>, IUIPickerViewDelegate
 	{
 		private const int imageSize = 25;
 
-		private Binding<string, string> _binding;
 		private UILabel _phoneErrorLabel;
 		private UITextField _phoneField;
 		private UITextField _nameField;
@@ -47,6 +46,7 @@ namespace UNLTestTask.Native.iOS.Views
 
 			_phoneTypePicker = new UIPickerView();
 			_phoneTypePicker.Model = new PhoneTypesPickerModel(ViewModel.PhoneTypes);
+			_phoneTypePicker.Delegate = this;
 
 			View.AddSubviews(
 				_nameErrorLabel,
@@ -124,17 +124,18 @@ namespace UNLTestTask.Native.iOS.Views
 			this.SetBinding(() => ViewModel.IsValid,
 				() => _submitBtn.Enabled, BindingMode.OneWay);
 
-			//this.SetBinding(() => ViewModel.PhoneType, BindingMode.OneWay)
-			//	.WhenSourceChanges(() =>
-			//		{
-			//			_phoneTypePicker.SelectedRowInComponent(ViewModel.PhoneTypes.IndexOf(ViewModel.PhoneType));
-			//		});
+			this.SetBinding(() => ViewModel.PhoneType, BindingMode.OneWay)
+				.WhenSourceChanges(() =>
+					{
+						_phoneTypePicker.Select(ViewModel.PhoneTypes.IndexOf(ViewModel.PhoneType), 0, true);
+					});
+		}
 
-			//this.SetBinding(() => _phoneTypeSpinner.SelectedItemPosition, BindingMode.OneWay)
-			//	.ObserveSourceEvent<AdapterView.ItemSelectedEventArgs>("ItemSelected")
-			//	.WhenSourceChanges(() =>
-			//		ViewModel.PhoneType = ViewModel.PhoneTypes[_phoneTypeSpinner.SelectedItemPosition == -1 ? 0 : _phoneTypeSpinner.SelectedItemPosition]);
-
+		[Export("pickerView:didSelectRow:inComponent:")]
+		private void Selected(UIPickerView pickerView, int row, int component)
+		{
+			var phoneType = ViewModel.PhoneTypes[row == -1 ? 0 : row];
+			ViewModel.PhoneType = phoneType;
 		}
 
 		protected internal EditContactUiViewController(IEditContactViewModel viewModel) : base(viewModel)
