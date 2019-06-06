@@ -1,7 +1,7 @@
 ﻿using Cirrious.FluentLayouts.Touch;
 using UIKit;
 
-namespace UNLTestTask.Native.iOS.Views
+namespace UNLTestTask.Native.iOS.Views.Adapters
 {
 	internal sealed class ContactUiTableViewCell : UITableViewCell
 	{

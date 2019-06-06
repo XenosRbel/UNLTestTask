@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UIKit;
+﻿using UIKit;
 using Foundation;
 using Cirrious.FluentLayouts.Touch;
 using GalaSoft.MvvmLight.Helpers;
@@ -9,7 +8,7 @@ using UNLTestTask.Native.iOS.Views.Adapters;
 namespace UNLTestTask.Native.iOS.Views
 {
 	[Register("ContactsUIViewController")]
-	public class ContactsUiViewController : BaseUiViewController<IContactsViewModel>, IUITableViewDelegate
+	public class ContactsUiViewController : BaseUiViewController<IContactsViewModel>
 	{
 		private UIButton _addContactUiButton;
 		private UITableView _contactsList;
@@ -27,7 +26,6 @@ namespace UNLTestTask.Native.iOS.Views
 
 			_contactsList = new UITableView(View.Bounds);
 			_contactsList.Source = new ContactCellSource(ViewModel.ContactViewModelsItems, ViewModel.ShowContactDetailsCommand);
-			//_contactsList.Delegate = this;
 			_contactsList.RefreshControl = new UIRefreshControl();
 
 			View.AddSubviews(_addContactUiButton, _contactsList);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UIKit;
 using UNLTestTask.Core.Presentation.ViewModels;
 
-namespace UNLTestTask.Native.iOS.Views
+namespace UNLTestTask.Native.iOS.Views.Adapters
 {
 	public class PhoneTypesPickerModel : UIPickerViewModel
 	{

@@ -29,9 +29,10 @@ namespace UNLTestTask.Native.iOS.Services
 					completionSource.SetResult(dialogResult);
 				};
 
-				UIAlertView alert = new UIAlertView(title, message, (IUIAlertViewDelegate)alertViewDelegate, cancel);
-
-				alert.Delegate = alertViewDelegate;
+				var alert = new UIAlertView(title, message, (IUIAlertViewDelegate) alertViewDelegate, cancel)
+				{
+					Delegate = alertViewDelegate
+				};
 				
 				alert.Show();
 			});
@@ -54,10 +55,11 @@ namespace UNLTestTask.Native.iOS.Services
 					completionSource.SetResult(dialogResult);
 				};
 
-				UIAlertView alert = new UIAlertView(title, message, (IUIAlertViewDelegate)alertViewDelegate, accept, cancel);
-
-				alert.Delegate = alertViewDelegate;
-
+				var alert = new UIAlertView(title, message, (IUIAlertViewDelegate) alertViewDelegate, accept, cancel)
+				{
+					Delegate = alertViewDelegate
+				};
+				
 				alert.Show();
 			});
 

@@ -1,15 +1,15 @@
-﻿using System;
-using Cirrious.FluentLayouts.Touch;
+﻿using Cirrious.FluentLayouts.Touch;
 using Foundation;
 using GalaSoft.MvvmLight.Helpers;
 using UIKit;
 using UNLTestTask.Core.Presentation.ViewModels;
+using UNLTestTask.Native.iOS.Views.Adapters;
 using Xamarin.Forms.Internals;
 
 namespace UNLTestTask.Native.iOS.Views
 {
 	[Register("EditContactUIViewController")]
-	public class EditContactUiViewController : BaseUiViewController<IEditContactViewModel>, IUIPickerViewDelegate
+	public class EditContactUiViewController : BaseUiViewController<IEditContactViewModel>
 	{
 		private const int imageSize = 25;
 

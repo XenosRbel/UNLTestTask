@@ -12,18 +12,18 @@ namespace UNLTestTask.Native.iOS.Views.Adapters
 	public class ContactCellSource : UITableViewSource
 	{
 		private readonly ObservableCollection<IContactViewModel> _collection;
-		private readonly ICommand ShowContactDetailsCommand;
+		private readonly ICommand _showContactDetailsCommand;
 		private const string CellIdentifier = "ContactCell";
 
 		public ContactCellSource(ObservableCollection<IContactViewModel> collection, ICommand showContactDetailsCommand)
 		{
-			_collection = collection;
-			ShowContactDetailsCommand = showContactDetailsCommand;
+			_collection = collection ?? throw new ArgumentNullException(nameof(collection));
+			_showContactDetailsCommand = showContactDetailsCommand ?? throw new ArgumentNullException(nameof(showContactDetailsCommand));
 		}
 
 		public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
 		{
-			ShowContactDetailsCommand.Execute(_collection[indexPath.Row]);
+			_showContactDetailsCommand.Execute(_collection[indexPath.Row]);
 		}
 
 		public override nint RowsInSection(UITableView tableview, nint section)
