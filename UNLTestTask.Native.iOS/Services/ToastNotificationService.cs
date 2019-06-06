@@ -7,8 +7,8 @@ namespace UNLTestTask.Native.iOS.Services
 {
 	internal class ToastNotificationService : IToastNotificationService
 	{
-		private const double LongDelay = 3.5;
-		private const double ShortDelay = 2.0;
+		private const double LongDelay = 1.5;
+		private const double ShortDelay = 0.5;
 
 		private NSTimer _alertDelay;
 		private UIAlertController _alert;
