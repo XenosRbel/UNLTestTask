@@ -26,7 +26,9 @@ namespace UNLTestTask.Native.iOS.Views
 			_phoneContact = new UILabel { Text = ViewModel.Contact.Property.PhoneNumber };
 
 			_callToContact = new UIButton(UIButtonType.RoundedRect);
-			_callToContact.SetTitle("Call", UIControlState.Selected);
+			_callToContact.BackgroundColor = UIColor.Black;
+			_callToContact.SetTitleColor(UIColor.Yellow, UIControlState.Normal);
+			_callToContact.SetTitle("Call to contact", UIControlState.Normal);
 
 			View.AddSubviews(
 				_contactPhoto,
@@ -51,7 +53,8 @@ namespace UNLTestTask.Native.iOS.Views
 
 				_callToContact.AtBottomOf(View),
 				_callToContact.AtLeadingOf(View),
-				_callToContact.AtTrailingOf(View));
+				_callToContact.AtTrailingOf(View),
+				_callToContact.Height().EqualTo(50));
 
 			View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 

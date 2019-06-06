@@ -26,8 +26,8 @@ namespace UNLTestTask.Native.iOS.Views
 			_addContactUiButton.SetTitle("Add contact", UIControlState.Normal);
 
 			_contactsList = new UITableView(View.Bounds);
-			_contactsList.Source = new ContactCellSource(ViewModel.ContactViewModelsItems);
-			_contactsList.Delegate = this;
+			_contactsList.Source = new ContactCellSource(ViewModel.ContactViewModelsItems, ViewModel.ShowContactDetailsCommand);
+			//_contactsList.Delegate = this;
 			_contactsList.RefreshControl = new UIRefreshControl();
 
 			View.AddSubviews(_addContactUiButton, _contactsList);
@@ -57,36 +57,6 @@ namespace UNLTestTask.Native.iOS.Views
 					_contactsList.ReloadData();
 					_contactsList.RefreshControl.EndRefreshing();
 				});
-		}
-
-		[Export("tableView:didSelectRowAtIndexPath:")]
-		private void RowSelected(UITableView tableView, NSIndexPath indexPath)
-		{
-			ViewModel.ShowContactDetailsCommand.Execute(ViewModel.ContactViewModelsItems[indexPath.Row]);
-		}
-
-		[Export("tableView:editActionsForRowAtIndexPath:")]
-		public UITableViewRowAction[] EditActionsForRow(UITableView tableView, NSIndexPath indexPath)
-		{
-			var rowActions = new List<UITableViewRowAction>();
-
-			rowActions.Add(UITableViewRowAction.Create(UITableViewRowActionStyle.Normal,
-				"Edit",
-				(action, path) =>
-				{
-					var selectedItemRow = ViewModel.ContactViewModelsItems[indexPath.Row];
-					selectedItemRow.EditContactCommand.Execute(selectedItemRow);
-				}));
-
-			rowActions.Add(UITableViewRowAction.Create(UITableViewRowActionStyle.Destructive,
-				"Remove",
-				(action, path) =>
-				{
-					var selectedItemRow = ViewModel.ContactViewModelsItems[indexPath.Row];
-					selectedItemRow.RemoveContactCommand.Execute(selectedItemRow);
-				}));
-
-			return rowActions.ToArray();
 		}
 
 		protected internal ContactsUiViewController(IContactsViewModel viewModel) : base(viewModel)
