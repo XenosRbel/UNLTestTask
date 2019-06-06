@@ -1,4 +1,5 @@
-﻿using Cirrious.FluentLayouts.Touch;
+﻿using System;
+using Cirrious.FluentLayouts.Touch;
 using Foundation;
 using GalaSoft.MvvmLight.Helpers;
 using UIKit;
@@ -45,8 +46,7 @@ namespace UNLTestTask.Native.iOS.Views
 			_phoneImage = new UIImageView { Image = UIImage.FromBundle("phone_black.png") };
 
 			_phoneTypePicker = new UIPickerView();
-			_phoneTypePicker.Model = new PhoneTypesPickerModel(ViewModel.PhoneTypes);
-			_phoneTypePicker.Delegate = this;
+			_phoneTypePicker.Model = new PhoneTypesPickerModel(ViewModel);
 
 			View.AddSubviews(
 				_nameErrorLabel,
@@ -129,13 +129,6 @@ namespace UNLTestTask.Native.iOS.Views
 					{
 						_phoneTypePicker.Select(ViewModel.PhoneTypes.IndexOf(ViewModel.PhoneType), 0, true);
 					});
-		}
-
-		[Export("pickerView:didSelectRow:inComponent:")]
-		private void Selected(UIPickerView pickerView, int row, int component)
-		{
-			var phoneType = ViewModel.PhoneTypes[row == -1 ? 0 : row];
-			ViewModel.PhoneType = phoneType;
 		}
 
 		protected internal EditContactUiViewController(IEditContactViewModel viewModel) : base(viewModel)

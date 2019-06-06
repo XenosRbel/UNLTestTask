@@ -35,6 +35,7 @@ namespace UNLTestTask.Native.iOS.Services
 			{
 				DismissMessage();
 			});
+
 			_alert = UIAlertController.Create(null, message, UIAlertControllerStyle.Alert);
 			UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(_alert, true, null);
 		}

@@ -28,6 +28,7 @@ namespace UNLTestTask.Native.iOS.Views
 			_contactsList = new UITableView(View.Bounds);
 			_contactsList.Source = new ContactCellSource(ViewModel.ContactViewModelsItems);
 			_contactsList.Delegate = this;
+			_contactsList.RefreshControl = new UIRefreshControl();
 
 			View.AddSubviews(_addContactUiButton, _contactsList);
 
@@ -46,6 +47,16 @@ namespace UNLTestTask.Native.iOS.Views
 			View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
 
 			_addContactUiButton.SetCommand("TouchUpInside", ViewModel.AddContactCommand);
+			
+			this.SetBinding(() => _contactsList.RefreshControl.Refreshing)
+				.ObserveSourceEvent("ValueChanged")
+				.WhenSourceChanges(async () =>
+				{
+					await ViewModel.LoadContacts();
+
+					_contactsList.ReloadData();
+					_contactsList.RefreshControl.EndRefreshing();
+				});
 		}
 
 		[Export("tableView:didSelectRowAtIndexPath:")]
