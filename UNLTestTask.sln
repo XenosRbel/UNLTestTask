@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UNLTestTask.Forms", "UNLTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UNLTestTask.Core", "UNLTestTask.Core\UNLTestTask.Core.csproj", "{30116881-34D5-4B40-B2CF-E467CADCA05C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UNLTestTask.Anroid", "UNLTestTask.Droid\UNLTestTask.Anroid.csproj", "{01D45448-32E3-46D3-AFB2-A36690FAE184}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UNLTestTask.Native.Anroid", "UNLTestTask.Droid\UNLTestTask.Native.Anroid.csproj", "{01D45448-32E3-46D3-AFB2-A36690FAE184}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UNLTestTask.Native.iOS", "UNLTestTask.Native.iOS\UNLTestTask.Native.iOS.csproj", "{68BE2887-A99D-4627-AAB9-66A48879E5F2}"
 EndProject
